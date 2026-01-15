@@ -1,4 +1,4 @@
-# ADAM Setup AI Agent - HR Overview
+# ADAM Setup AI Agent
 
 ## 📋 Project Summary
 

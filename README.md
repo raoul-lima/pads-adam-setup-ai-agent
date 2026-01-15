@@ -184,7 +184,4 @@ New team members should review:
 
 For questions about the project, technology stack, or team roles, contact the development team leads.
 
----
-
-*This document provides a high-level overview for HR, recruitment, and business stakeholders. For technical details, see the main README.md and ONBOARDING.md.*
 

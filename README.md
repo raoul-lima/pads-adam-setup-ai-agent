@@ -180,8 +180,4 @@ New team members should review:
 - **Global Deployment**: Cloud-based infrastructure supports worldwide access
 - **Cultural Adaptation**: Responses adapted to different markets and practices
 
-## 📞 Contact
-
-For questions about the project, technology stack, or team roles, contact the development team leads.
-
 

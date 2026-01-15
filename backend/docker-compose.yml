@@ -1,0 +1,48 @@
+services:
+  adam-api:
+    build:
+      context: ./adam-api
+      dockerfile: Dockerfile
+    container_name: adam-setup-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./adam-api/.env
+    volumes:
+      - ./adam-api/local_data:/app/local_data
+      - ./adam-api/logs:/app/logs
+      - ./adam-api/credentials.json:/app/credentials.json:ro
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  evaluation-api:
+    build:
+      context: ./evaluation-api
+      dockerfile: Dockerfile
+    container_name: evaluation-api
+    ports:
+      - "8001:8001"
+    env_file:
+      - ./evaluation-api/.env
+    volumes:
+      - ./evaluation-api/credentials.json:/app/credentials.json:ro
+    environment:
+      # Override ADAM_API_URL to use docker service name
+      - ADAM_API_URL=http://adam-api:8000
+    depends_on:
+      adam-api:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  local_data:

@@ -1,0 +1,8 @@
+Business Rules : https://docs.google.com/spreadsheets/d/1_eDXhxQDbP_E_k7nGWYqVCWAh58Bn8-r3cv7WYkiBdk/edit?gid=0#gid=0
+Buseinss Rules Anomaly : https://docs.google.com/spreadsheets/d/1tSKVQS7E90L4XZbAto6kMSojvfj_wqUuWA2wfu0ODe0/edit?gid=648623035#gid=648623035
+
+- Fetch data for new users:
+    curl --location ‘https://testing.adsecura.com/api/v1/sdf-export/collect-for-users’ \
+    --header ‘Content-Type: application/json’ \
+    --header ‘Authorization: Bearer  \
+    --data-raw ‘[“samir.lead@yopmail.com”]’

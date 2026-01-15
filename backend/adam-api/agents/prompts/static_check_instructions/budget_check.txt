@@ -1,0 +1,479 @@
+================================================================================
+ANALYSIS TYPE: DV360 Budget & Financial Compliance Audit
+CATEGORY: budget_check
+================================================================================
+
+**IMPORTANT**: Financial rules and thresholds are highly partner-specific. Always confirm partner standards, pacing tolerances, and markup/fee structures before analysis. Default values are provided as guidelines only.
+
+----------------- ANALYSIS OVERVIEW -----------------
+
+**Purpose**: Audit financial health and compliance of DV360 campaigns:
+1. Validate budget configuration and allocation
+2. Monitor pacing against flight dates (over/under-pacing)
+3. Ensure budget hierarchy consistency (Campaign → IO → Line Item)
+4. Verify financial parameters (markup, fees) compliance
+5. Identify budget risks (overruns, unspent budgets, misallocations)
+
+**Scope**: Campaigns, Insertion Orders, and Line Items with budget/spend analysis
+
+**Key Financial Dimensions**:
+- Budget allocation and limits
+- Spend pacing (even, ahead, ASAP)
+- Actual spend vs budget
+- Budget hierarchy consistency
+- Financial parameters (markup, fees)
+- Flight date compliance
+
+----------------- DATA SOURCES & FIELD REQUIREMENTS -----------------
+
+**From Campaigns**:
+- Campaign_Id, Campaign (identifiers)
+- Campaign_Budget (total budget)
+- Actual_Spend (if available from performance data)
+- Start_Date, End_Date (flight dates)
+- Status
+
+**From Insertion_Orders**:
+- Insertion_Order_Id, Insertion_Order (identifiers)
+- Campaign_Id (for joins and hierarchy checks)
+- Budget_Segments OR Budget (total IO budget)
+- Actual_Spend
+- Start_Date, End_Date
+- Pacing (ASAP/Even/Ahead)
+- Budget_Type (Fixed/Unlimited/Daily)
+- Status
+
+**From Line_Items**:
+- Line_Item_Id, Line_Item (identifiers)
+- Insertion_Order_Id, Campaign_Id (for joins)
+- Budget_Amount (line item budget)
+- Actual_Spend
+- Start_Date, End_Date
+- Pacing (ASAP/Even/Ahead)
+- Budget_Type (Fixed/Flight/Daily/Unlimited)
+- Partner_Revenue_Amount (markup value)
+- Fees (fee structure)
+- Type (Standard Display, YouTube, Gmail, etc.)
+- Inventory_Commitment_Type (Open Auction, Guaranteed Deal, etc.)
+- Status
+
+**From Partner_Settings** (ask user if not available):
+- Partner_Markup_Percentage (e.g., 15%)
+- Partner_Fees_Exchange_Rate_Percentage (e.g., 2.5% for standard inventory)
+- Partner_Fees_Non_Exchange_Rate_Percentage (e.g., 3.5% for YouTube/guaranteed)
+- Over_Pacing_Threshold (e.g., +20% = overspending by 20%)
+- Under_Pacing_Threshold (e.g., -20% = underspending by 20%)
+
+**Required Calculations**:
+
+**Time-Based Metrics** (for each entity with budget):
+```
+Current_Date = {current_datetime}
+Total_Days_in_Flight = End_Date - Start_Date
+Days_Elapsed = Current_Date - Start_Date
+Days_Remaining = End_Date - Current_Date
+```
+
+**Pacing Metrics**:
+```
+Expected_Spend_Percentage = Days_Elapsed / Total_Days_in_Flight * 100
+Actual_Spend_Percentage = (Actual_Spend / Budget) * 100
+Pacing_Delta = Actual_Spend_Percentage - Expected_Spend_Percentage
+```
+
+**Example**:
+- Campaign: $100,000 budget, 30 days flight, 15 days elapsed
+- Expected spend: 50% ($50,000)
+- Actual spend: $65,000 (65%)
+- Pacing Delta: +15% (overpacing)
+
+**Line Item Category** (determines fee structure):
+```
+IF Type in ['YouTube Video', 'Gmail'] OR Inventory_Commitment_Type = 'Guaranteed Deal':
+    Line_Item_Category = 'Non-Exchange Rate'
+ELSE:
+    Line_Item_Category = 'Exchange Rate'
+```
+
+----------------- COMPLIANCE CHECKS & VALIDATION RULES -----------------
+
+**CATEGORY A: PACING & SPEND COMPLIANCE**
+
+**Purpose**: Ensure campaigns spend budget evenly and efficiently
+
+**A1. Over-Pacing Detection**
+- **Rule**: Entity should not spend budget faster than time elapsed allows
+- **Non-Compliant Conditions**:
+  * Pacing_Delta > Partner_Over_Pacing_Threshold (default: +20%)
+  * Entity is spending significantly faster than expected
+- **Error_Type**: "Over-Pacing"
+- **Severity**: HIGH (risk of budget exhaustion, premature campaign end)
+- **Example**: 30% of flight elapsed, but 60% of budget spent (+30% delta)
+
+**A2. Under-Pacing Detection**
+- **Rule**: Entity should not spend budget slower than necessary to meet goals
+- **Non-Compliant Conditions**:
+  * Pacing_Delta < Partner_Under_Pacing_Threshold (default: -20%)
+  * Entity is spending significantly slower than expected
+- **Error_Type**: "Under-Pacing"
+- **Severity**: MEDIUM (risk of unspent budget, missed impressions/conversions)
+- **Example**: 60% of flight elapsed, but only 30% of budget spent (-30% delta)
+
+**A3. Total Budget Overrun**
+- **Rule**: Entity must not exceed its allocated budget
+- **Non-Compliant Conditions**:
+  * Actual_Spend > Budget
+- **Error_Type**: "Total Budget Overrun"
+- **Severity**: CRITICAL (financial loss, contractual violation)
+- **Context**: Requires immediate attention
+
+**A4. Unspent Budget at Flight End**
+- **Rule**: Budget should be fully spent by end date
+- **Non-Compliant Conditions**:
+  * Current_Date >= End_Date
+  * AND Actual_Spend < Budget
+- **Error_Type**: "Unspent Budget at Flight End"
+- **Severity**: HIGH (wasted opportunity, failed to deliver full campaign)
+- **Context**: Campaign ended without spending allocated budget
+
+---
+
+**CATEGORY B: PACING TYPE COMPLIANCE**
+
+**Purpose**: Ensure pacing strategy aligns with budget type and campaign goals
+
+**B1. IO ASAP Pacing (Generally Not Recommended)**
+- **Rule**: Insertion Orders should use controlled pacing (Even/Ahead)
+- **Non-Compliant Conditions**:
+  * Pacing = "ASAP" OR "PACING_ASAP"
+- **Error_Type**: "IO ASAP Pacing"
+- **Severity**: MEDIUM
+- **Context**: ASAP pacing can burn budget quickly without strategic distribution
+
+**B2. LI ASAP with Unlimited Budget (Critical Risk)**
+- **Rule**: Line items with ASAP pacing must have budget limits
+- **Non-Compliant Conditions**:
+  * Pacing = "ASAP"
+  * AND Budget_Type = "Unlimited" OR Budget_Amount is NULL
+- **Error_Type**: "LI ASAP with Unlimited Budget"
+- **Severity**: CRITICAL (unlimited spend risk)
+- **Context**: Can cause runaway spend
+
+**B3. Even Pacing Mismatch**
+- **Rule**: Line items with "Even" pacing should have pacing delta near 0%
+- **Non-Compliant Conditions**:
+  * Pacing = "Even" OR "PACING_EVEN"
+  * AND (Pacing_Delta < 0% OR Pacing_Delta > +20%)
+- **Error_Type**: "LI Even Pacing Mismatch"
+- **Severity**: MEDIUM
+- **Context**: Even pacing not working as intended; needs adjustment
+
+**B4. Ahead Pacing Mismatch**
+- **Rule**: Line items with "Ahead" pacing should be overpacing intentionally
+- **Non-Compliant Conditions**:
+  * Pacing = "Ahead" OR "PACING_AHEAD"
+  * AND Pacing_Delta < +20%
+- **Error_Type**: "LI Ahead Pacing Mismatch"
+- **Severity**: MEDIUM
+- **Context**: Ahead pacing strategy not achieving target
+
+---
+
+**CATEGORY C: BUDGET HIERARCHY CONSISTENCY**
+
+**Purpose**: Ensure budget allocation is logical across campaign hierarchy
+
+**C1. IO/Line Item Budget Mismatch**
+- **Rule**: Sum of Line Item budgets under an IO should match IO budget
+- **Non-Compliant Conditions**:
+  * SUM(Line_Item.Budget_Amount) WHERE Line_Item.Insertion_Order_Id = IO.ID
+  * != IO.Budget (allowing small rounding tolerance, e.g., ±1%)
+- **Error_Type**: "IO/Line Item Budget Mismatch"
+- **Severity**: HIGH
+- **Context**: Budget allocation error; line items don't add up to IO budget
+- **Validation Logic**:
+  ```
+  FOR each Insertion_Order:
+      Child_LI_Budget_Sum = SUM of all Line_Items under this IO
+      IF abs(Child_LI_Budget_Sum - IO.Budget) > (IO.Budget * 0.01):
+          Flag as mismatch
+  ```
+
+**C2. IO/Line Item Spend Mismatch**
+- **Rule**: Sum of Line Item actual spend should match IO actual spend
+- **Non-Compliant Conditions**:
+  * SUM(Line_Item.Actual_Spend) != IO.Actual_Spend (tolerance: ±1%)
+- **Error_Type**: "IO/Line Item Spend Mismatch"
+- **Severity**: MEDIUM
+- **Context**: Data discrepancy; spend reporting inconsistency
+
+**C3. Campaign/IO Budget Mismatch**
+- **Rule**: Sum of IO budgets under a Campaign should match Campaign budget
+- **Non-Compliant Conditions**:
+  * SUM(IO.Budget) WHERE IO.Campaign_Id = Campaign.ID
+  * != Campaign.Budget (tolerance: ±1%)
+- **Error_Type**: "Campaign/IO Budget Mismatch"
+- **Severity**: HIGH
+- **Context**: Campaign budget not properly allocated to IOs
+
+---
+
+**CATEGORY D: FINANCIAL PARAMETER COMPLIANCE (MARKUP & FEES)**
+
+**Purpose**: Ensure markup and fees match partner agreements
+
+**D1. Markup Mismatch**
+- **Rule**: Line item markup should match partner standard percentage
+- **Non-Compliant Conditions**:
+  * Partner_Markup_Percentage is defined (e.g., 15%)
+  * AND Partner_Revenue_Amount != (Budget_Amount * Partner_Markup_Percentage / 100)
+  * (Allow tolerance: ±0.1%)
+- **Error_Type**: "Markup Mismatch"
+- **Severity**: HIGH (financial discrepancy)
+- **Validation Logic**:
+  ```
+  Expected_Markup = Budget_Amount * (Partner_Markup_Percentage / 100)
+  IF abs(Partner_Revenue_Amount - Expected_Markup) > (Expected_Markup * 0.001):
+      Flag as mismatch
+  ```
+
+**D2. Missing Line Item Markup**
+- **Rule**: If partner has standard markup, all line items should have markup set
+- **Non-Compliant Conditions**:
+  * Partner_Markup_Percentage is defined
+  * AND (Partner_Revenue_Amount is NULL OR = 0)
+- **Error_Type**: "Missing Line Item Markup"
+- **Severity**: HIGH (revenue loss)
+
+**D3. Exchange Rate Fee Mismatch**
+- **Rule**: Standard inventory should use standard fee percentage
+- **Non-Compliant Conditions**:
+  * Line_Item_Category = 'Exchange Rate'
+  * AND Fees != Partner_Fees_Exchange_Rate_Percentage
+  * (Allow tolerance: ±0.1%)
+- **Error_Type**: "Exchange Rate Fee Mismatch"
+- **Severity**: MEDIUM
+
+**D4. Non-Exchange Rate Fee Mismatch**
+- **Rule**: YouTube/Gmail/Guaranteed inventory should use non-exchange fee percentage
+- **Non-Compliant Conditions**:
+  * Line_Item_Category = 'Non-Exchange Rate'
+  * AND Fees != Partner_Fees_Non_Exchange_Rate_Percentage
+- **Error_Type**: "Non-Exchange Rate Fee Mismatch"
+- **Severity**: MEDIUM
+
+----------------- ANALYSIS WORKFLOW -----------------
+
+**Step 1: Gather Partner Financial Standards**
+
+Ask user for critical parameters:
+- "What's your standard markup percentage? (e.g., 15%)"
+- "What fee structure do you use?"
+  * Exchange rate fee: __%
+  * Non-exchange rate fee (YouTube/guaranteed): __%
+- "What pacing tolerance do you allow?"
+  * Over-pacing threshold: ___% (default: +20%)
+  * Under-pacing threshold: ___% (default: -20%)
+- "Should I include inactive campaigns in the analysis?"
+
+Store in conversation context.
+
+---
+
+**Step 2: Clarify Analysis Scope**
+
+Confirm:
+- Which entities to audit (ALL? Active only? Specific campaigns?)
+- Which financial checks to run (ALL? Pacing only? Budget hierarchy only?)
+- Should performance data be included? (Actual spend)
+- Time frame: Current active flights only? Or historical campaigns too?
+
+---
+
+**Step 3: Perform Calculations**
+
+For each entity with budget:
+1. Calculate time-based metrics (days elapsed, days remaining)
+2. Calculate pacing metrics (expected vs actual spend %)
+3. Determine Line Item Category (exchange vs non-exchange)
+4. Calculate expected markup and fees
+5. Aggregate child budgets for hierarchy checks
+
+---
+
+**Step 4: Execute Compliance Checks**
+
+Run all applicable checks based on:
+- Entity type (Campaign/IO/Line Item)
+- Data availability (has actual spend data?)
+- Partner standards provided
+
+---
+
+**Step 5: Structure Results with Prioritization**
+
+Group by severity:
+- **Critical**: Budget overruns, unlimited ASAP pacing
+- **High**: Significant pacing issues, budget mismatches, markup errors
+- **Medium**: Minor pacing issues, fee discrepancies
+- **Low**: Warnings, informational findings
+
+----------------- OUTPUT SPECIFICATIONS -----------------
+
+**Table 1: Compliant_Results**
+
+Columns:
+- Entity_Type (Campaign/IO/Line Item)
+- Partner, Advertiser
+- Campaign_Id, Campaign
+- Insertion_Order_Id, Insertion_Order (if applicable)
+- Line_Item_Id, Line_Item (if applicable)
+- Budget, Actual_Spend, Spend_Percentage
+- Pacing_Delta
+- Days_Elapsed, Days_Remaining
+- Markup_Status, Fee_Status
+- Compliance_Status = "Compliant"
+
+**Table 2: Non_Compliant_Results**
+
+All columns from Table 1, plus:
+- **Error_Type**: Specific issue description
+- **Error_Category**: Pacing/Budget Hierarchy/Financial Parameters
+- **Severity**: CRITICAL/HIGH/MEDIUM/LOW
+- **Current_Value**: Actual value found
+- **Expected_Value**: What should be
+- **Financial_Impact**: Estimated $ impact (if calculable)
+- **Days_Until_End**: Urgency indicator
+- **DV360_Link**: Direct URL to entity
+- **Recommended_Action**: Specific fix
+
+**Example Non-Compliant Row**:
+```
+Entity_Type: Line Item
+Line_Item: "FR EN - Public - 1P Audience - Mobile"
+Budget: $50,000
+Actual_Spend: $42,000
+Spend_Percentage: 84%
+Days_Elapsed: 15 / 30 (50%)
+Pacing_Delta: +34%
+Error_Type: Over-Pacing
+Severity: HIGH
+Current_Value: 84% spent at 50% flight
+Expected_Value: ~50% spent at 50% flight
+Financial_Impact: Risk of $8,000 overrun if continues
+Days_Until_End: 15 days
+Recommended_Action: Reduce bid or pause temporarily to align pacing
+```
+
+**Summary Statistics**:
+```
+Financial Health Overview:
+=========================
+Total Budget Audited: $2,450,000
+Total Actual Spend: $1,876,000 (76.6%)
+Average Pacing Delta: +8.2%
+
+Entities Audited: 234
+  - Campaigns: 12
+  - Insertion Orders: 45
+  - Line Items: 177
+
+Compliance Summary:
+  - Fully Compliant: 178 (76.1%)
+  - Non-Compliant: 56 (23.9%)
+
+Issues by Severity:
+  - Critical: 3 (Budget Overruns, Unlimited ASAP)
+  - High: 15 (Over-Pacing, Budget Mismatches)
+  - Medium: 28 (Under-Pacing, Fee Errors)
+  - Low: 10 (Minor Warnings)
+
+Top 5 Budget Issues:
+  1. Over-Pacing: 18 line items (avg +28% delta)
+  2. Under-Pacing: 12 line items (avg -24% delta)
+  3. Markup Mismatch: 8 line items
+  4. IO/LI Budget Mismatch: 6 IOs
+  5. Fee Mismatch: 5 line items
+
+At-Risk Budget: $124,000 (from over-pacing entities)
+Unspent Budget Risk: $89,000 (from under-pacing entities)
+```
+
+----------------- EDGE CASES & SPECIAL HANDLING -----------------
+
+**Campaigns Not Yet Started**:
+- Days_Elapsed < 0 (start date in future)
+- Skip pacing checks, flag as "Not Started"
+
+**Campaigns Already Ended**:
+- Check for unspent budget
+- Final spend vs budget reconciliation
+
+**Budget Segments (IOs)**:
+- Some IOs have multiple budget segments (different date ranges)
+- Calculate pacing per active segment
+
+**Null/Missing Actual Spend Data**:
+- If performance data unavailable, skip spend-based checks
+- Flag as "Data Not Available" instead of compliant/non-compliant
+
+**Rounding Tolerances**:
+- Allow ±1% tolerance for budget hierarchy checks
+- Allow ±0.1% tolerance for markup/fee calculations
+
+**Multi-Currency Campaigns**:
+- Ensure currency consistency when comparing values
+- Flag if multiple currencies detected
+
+----------------- COMMON BUDGET ANALYSIS PATTERNS -----------------
+
+**Pattern 1: "Full financial audit"**
+→ Run ALL financial checks
+→ Return: Comprehensive budget compliance report
+
+**Pattern 2: "Check pacing issues"**
+→ Focus on categories A & B (pacing checks)
+→ Return: Over/under-pacing report with urgency rankings
+
+**Pattern 3: "Validate budget hierarchy"**
+→ Focus on category C (budget consistency)
+→ Return: Budget allocation mismatches
+
+**Pattern 4: "Check markup and fees"**
+→ Focus on category D (financial parameters)
+→ Return: Revenue and fee compliance report
+
+**Pattern 5: "Find at-risk budgets"**
+→ Identify critical issues (overruns, ASAP unlimited)
+→ Return: High-priority financial risks requiring immediate action
+
+----------------- USER INTERACTION GUIDELINES -----------------
+
+**When to Ask Questions**:
+✓ Partner markup/fee structure not known
+✓ Pacing thresholds not defined
+✓ User says "budget check" without specifying scope
+✓ Ambiguous about time frame (active only? All campaigns?)
+
+**Good Questions**:
+1. "What markup percentage do you apply to line items? (e.g., 15%)"
+2. "What pacing tolerance is acceptable? (default: ±20%)"
+3. "Should I check only active campaigns, or include completed/paused ones?"
+4. "Do you have access to actual spend data, or should I work with budget only?"
+5. "Are there specific campaigns or IOs you're concerned about?"
+
+**When to Proceed Without Asking**:
+✓ User explicitly stated financial parameters
+✓ Industry-standard defaults are acceptable (ask for confirmation)
+✓ Conversation history has partner rules
+✓ Scope clearly defined ("check all active campaigns")
+
+**Providing Insights**:
+- Highlight highest-risk items first (critical severity)
+- Offer remediation suggestions
+- Calculate financial impact estimates
+- "3 line items are severely over-pacing and risk burning $45K in the next 5 days. Should I generate recommended bid adjustments?"
+
+================================================================================
+END OF BUDGET CHECK INSTRUCTIONS
+================================================================================

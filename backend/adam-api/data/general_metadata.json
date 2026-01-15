@@ -1,0 +1,1947 @@
+{
+    "metadata": {
+        "metadata_fields_Line_items": {
+            "Line Item Id": {
+                "type": "integer",
+                "description": "A unique identifier for the line item. This ID is crucial for specific lookups, detailed checks, and joining with other datasets. It is the primary key for line item analysis.",
+                "dv360_definition": "Numeric ID value of the line item. If left blank, a new line item will be created and a unique ID will be assigned. Optionally, when creating new Line Items, you can use a custom identifier for the purpose of assigning TrueView Ad Groups to the new Line Item. The format for a custom identifier is \"ext[custom identifier]\", for example, ext123. When the file is uploaded and processed, all custom identifiers will be replaced with DBM-assigned IDs and the objects will be associated (for example, Ad Group to Line Item) based on the custom identifiers.",
+                "sample_data": [
+                    "22004720345.0",
+                    "22119215733.0",
+                    "22119216225.0"
+                ]
+            },
+            "Partner ID": {
+                "type": "integer",
+                "description": "The unique identifier for the partner account. This field is used to filter data for a specific partner and for high-level aggregation.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "373",
+                    "1018886920"
+                ]
+            },
+            "Advertiser Id": {
+                "type": "Integer",
+                "description": "The unique identifier for the advertiser. It links line items to a specific advertiser, allowing for advertiser-level performance analysis and filtering.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "742781690",
+                    "48",
+                    "1074133614"
+                ]
+            },
+            "Advertiser Name": {
+                "type": "string",
+                "description": "The name of the advertiser. Useful for quickly identifying the advertiser in reports and analyses without needing to join with other tables.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "DCM - Yuzzu",
+                    "DCM - Cetelem",
+                    "Advertiser Test - Formation Mada"
+                ]
+            },
+            "Campaign Id": {
+                "type": "Integer",
+                "description": "The unique identifier for the campaign. This field links the line item to its parent campaign, enabling campaign-level analysis.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "55181175",
+                    "55162741",
+                    "55155704"
+                ]
+            },
+            "Campaign Name": {
+                "type": "string",
+                "description": "The name of the campaign. This provides a human-readable identifier for the campaign, which is useful for reporting and analysis.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "2025 - AWARENESS (All products)",
+                    "2025 - AUTO PROMO CONSIDERATION",
+                    "2025 - CONVERSION (All Products)"
+                ]
+            },
+            "dv360_link": {
+                "type": "string",
+                "description": "A direct URL to the line item in the DV360 interface. This allows for quick access and verification of the line item's settings.",
+                "dv360_definition": "Direct URL link to open the entity in DV360 interface for easy navigation.",
+                "sample_data": [
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/742781690/c/55181175/io/1019236691/li/22004720345/details",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/742781690/c/55181175/io/1019236691/li/22119215733/details",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/742781690/c/55181175/io/1019236691/li/22119216225/details"
+                ]
+            },
+            "Io Id": {
+                "type": "integer",
+                "description": "The unique identifier for the insertion order. This field links the line item to its parent insertion order, which is essential for budget and flight date analysis.",
+                "dv360_definition": "Numeric ID value of the insertion order. You can specify a custom identifier (for example, \"ext[custom IO identifier]\") for an insertion order that you are creating at the same time as this line item.",
+                "sample_data": [
+                    "1019236691.0",
+                    "1019308551.0",
+                    "1019309232.0"
+                ]
+            },
+            "Io Name": {
+                "type": "string",
+                "description": "The name of the Insertion Order. Often contains details about the campaign phase, ad format, or targeting, which can be parsed for deeper analysis.",
+                "dv360_definition": "Insertion Order Name",
+                "sample_data": [
+                    "Auto - Awareness - Youtube (Instream) - BEFR@YUZZU00055_PAV_AWA_CAR_youtubeinstream_quality",
+                    "Auto - Awareness - Youtube (Instream) - BENL@YUZZU00055_PAV_AWA_CAR_youtubeinstream_quality",
+                    "Auto Promo - Consideration - Native (Display) - BEFR@YUZZU00055_PAD_CONS_CAR_Nativedisplay_promo"
+                ]
+            },
+            "Type": {
+                "type": "string",
+                "description": "The channel type of the line item. This is a critical field for analysis, used to segment performance by channel (e.g., Video, Display, YouTube, Audio).",
+                "dv360_definition": "The type of entry.\n\nOnly writable when creating, not editing.\n\nSelect one of the following values:\n\nDisplay\nVideo\nTrueView\nAudio\nDemand Gen",
+                "sample_data": [
+                    "TrueView",
+                    "Display",
+                    "Video"
+                ]
+            },
+            "Subtype": {
+                "type": "string",
+                "description": "The specific format for a given channel, especially for YouTube. For example, for a 'YouTube' type, subtypes could be 'Skippable', 'Non-skippable', 'In-feed', 'Shorts', or 'Bumper'. This is often used for performance analysis of different YouTube ad formats.",
+                "dv360_definition": "Field required for line items to distinguish between different formats.\n\nSelect one of the following values:\n\nSimple\nNon Skippable\nAction\nReach\nView\nAudio\nOver The Top\nMobile App Install\nMobile App Buying\nSimple Over The Top\nNon Skippable Over The Top\nReach Over The Top\nTarget Frequency\nDemand Gen\n\n\n'Action' is not compatible with TrueView line items.",
+                "sample_data": [
+                    "View",
+                    "Simple",
+                    "Non Skippable"
+                ]
+            },
+            "Name": {
+                "type": "string",
+                "description": "The name of the line item. It often contains information about the country, language, or audience being targeted, which can be parsed for detailed analysis.",
+                "dv360_definition": "The name of the entry.",
+                "sample_data": [
+                    "BEFR - Affinity : Auto Enthusiasts",
+                    "BEFR - Affinity : Vehicles & Transportation",
+                    "BEFR - Category : Auto & Vehicles"
+                ]
+            },
+            "Status": {
+                "type": "string",
+                "description": "The current status of the line item (e.g., Active, Paused, Draft). This is useful for filtering out inactive line items from performance analysis.",
+                "dv360_definition": "The status setting for the entry.Active\nPaused\nDraft\nArchived",
+                "sample_data": [
+                    "Active",
+                    "Paused",
+                    "Draft"
+                ]
+            },
+            "Start Date": {
+                "type": "string",
+                "description": "The start date of the line item's flight. It usually inherits the start date from its parent Insertion Order ('Same as Insertion Order'), but can be customized for specific cases.",
+                "dv360_definition": "A timestamp for the flight start date of the entry in the format MM/DD/YYYY or \"Same as Insertion Order\" to use the same start date as the parent Insertion Order.",
+                "sample_data": [
+                    "01/01/2025",
+                    "01/15/2025",
+                    "03/01/2025"
+                ]
+            },
+            "End Date": {
+                "type": "string",
+                "description": "The end date of the line item's flight. It usually inherits the end date from its parent Insertion Order ('Same as Insertion Order'), but can be customized for specific situations.",
+                "dv360_definition": "A timestamp for the flight end date of the entry in the format MM/DD/YYYY or \"Same as Insertion Order\" to use the same end date as the parent Insertion Order.",
+                "sample_data": [
+                    "06/30/2025",
+                    "09/30/2025",
+                    "08/31/2025"
+                ]
+            },
+            "Budget Type": {
+                "type": "string",
+                "description": "Defines how the line item's budget is measured, either by currency ('Amount') or 'Impressions'. 'Unlimited' indicates it draws from the insertion order's budget. This field is a key component for any budget and pacing analysis.",
+                "dv360_definition": "Specifies whether the budget is monetarily based or impression-based. If the IO for this entry is enabled for auto-budget allocation, you can set this to 'Automatic' to allow DBM to automatically budget for this entry.Amount\nImpressions\nUnlimited\nAutomatic\nTrueView Budget",
+                "sample_data": [
+                    "TrueView Budget",
+                    "Unlimited",
+                    "0"
+                ]
+            },
+            "Budget Amount": {
+                "type": "float",
+                "description": "The budget allocated to the line item, corresponding to the 'Budget Type'. For currency-based budgets, this is a float value in the advertiser's currency. This should be reviewed when analyzing budget and pacing.",
+                "dv360_definition": "A positive budget amount for the budget type. This could be a simple integer impression value, or a float for a currency amount. Currencies will be shown in the advertiser's currency in standard units (not in 1/1,000,000s of a currency unit). If 'Automatic' budget allocation is set on the entry, you can specify a minimum amount to spend (for example, 'spend at least' this amount).",
+                "sample_data": [
+                    "0.01",
+                    "500.0",
+                    "1239.0"
+                ]
+            },
+            "Pacing": {
+                "type": "string",
+                "description": "The period over which the budget is spent, either 'Daily' or for the entire 'Flight'. This is a critical setting to check for budget and pacing analysis.",
+                "dv360_definition": "The time period used to spend to the pacing amount.TrueView and Demand Gen line items can only be 'Daily' or 'Flight'",
+                "sample_data": [
+                    "Daily",
+                    "Flight"
+                ]
+            },
+            "Pacing Rate": {
+                "type": "string",
+                "description": "The rate at which the budget is spent. 'ASAP' spends the budget as quickly as possible, 'Even' distributes it evenly, and 'Ahead' spends it faster at the beginning. Important for budget and pacing analysis.",
+                "dv360_definition": "The rate of pacing for this entry.\n\nSelect one of the following values:ASAP\nEven\nAhead\nTrueView and Demand Gen line items can only be 'ASAP' or 'Even'",
+                "sample_data": [
+                    "ASAP",
+                    "Even",
+                    "Ahead"
+                ]
+            },
+            "Pacing Amount": {
+                "type": "float",
+                "description": "The amount to be spent per the period defined by the 'Pacing' setting. A key field for budget and pacing analysis.",
+                "dv360_definition": "The amount to spend per the time period set by the pacing type.",
+                "sample_data": [
+                    "214.18",
+                    "215.63",
+                    "149.53"
+                ]
+            },
+            "Frequency Enabled": {
+                "type": "string",
+                "description": "Indicates if frequency capping is enabled. When analyzing frequency caps, this field should be checked along with 'Frequency Exposures', 'Frequency Amount', and 'Frequency Period'.",
+                "dv360_definition": "Enables/disables impression-based frequency capping on the line item.\n\nSelect one of the following values:TRUE\nFALSE",
+                "sample_data": [
+                    "True",
+                    "False"
+                ]
+            },
+            "Frequency Exposures": {
+                "type": "integer",
+                "description": "The number of impressions allowed per user within the defined frequency cap period.",
+                "dv360_definition": "A positive integer amount for the number of impressions in a given Frequency Amount, that is, the x in 'Show x impressions over y period'.",
+                "sample_data": [
+                    "3.0",
+                    "2.0",
+                    "4.0"
+                ]
+            },
+            "Frequency Period": {
+                "type": "string",
+                "description": "The time unit for the frequency cap (e.g., Hours, Days, Weeks).",
+                "dv360_definition": "Specifies the time period unit for the frequency cap.\n\nSelect one of the following values:Minutes\nHours\nDays\nWeeks\nMonths\nFor TrueView and Demand Gen line items, supported periods are Days, Weeks, Months.",
+                "sample_data": [
+                    "Weeks",
+                    "Hours",
+                    "Days"
+                ]
+            },
+            "Frequency Amount": {
+                "type": "integer",
+                "description": "The duration of the frequency cap period (e.g., 4 hours, 7 days). This is used in combination with 'Frequency Exposures' and 'Frequency Period'. Note: Not supported for TrueView or Demand Gen line items.",
+                "dv360_definition": "A positive integer amount for length of time of the Frequency Period type, that is, the y in 'Show x impressions over y period'.This amount is not supported for TrueView or Demand Gen line items.\n\nFrequency cap time periods must be 30 days or less.",
+                "sample_data": [
+                    "4",
+                    "2",
+                    "3"
+                ]
+            },
+            "TrueView View Frequency Enabled": {
+                "type": "string",
+                "description": "Indicates if view-based frequency capping is enabled, specific to TrueView line items.",
+                "dv360_definition": "Enables/disables view-based frequency capping on the TrueView line itemTRUE\nFALSE",
+                "sample_data": [
+                    "True"
+                ]
+            },
+            "TrueView View Frequency Exposures": {
+                "type": "integer",
+                "description": "The number of views allowed per user within the defined frequency cap period for TrueView line items.",
+                "dv360_definition": "A positive integer amount for the number of TrueView views, that is, the x in 'Show x views over the period'",
+                "sample_data": [
+                    "2",
+                    "3",
+                    "True"
+                ]
+            },
+            "TrueView View Frequency Period": {
+                "type": "string",
+                "description": "The time unit for the view-based frequency cap for TrueView line items (Days, Weeks, or Months).",
+                "dv360_definition": "Specifies the time period unit for the TrueView view-based frequency capDays\nWeeks\nMonths",
+                "sample_data": [
+                    "Weeks",
+                    "Days"
+                ]
+            },
+            "Fees": {
+                "type": "string, list of lists",
+                "description": "A list of all fees associated with the line item. This field is typically compared with the fees at the IO level, especially for specific formats like Xtra Social. After transformation, the data is parsed from a complex string into a structured list for easier analysis.",
+                "dv360_definition": "All fees for this entry. List format = (Fee category; Fee amount; Fee type; Invoiced;).Fee categoryCPM\nMedia\n\nFee amountFloat\nPct as float\n\nFee type(string, see table in fees)\n\nInvoicedTrue\nFalse\nblank\n\nExample '(CPM; 2; Display & Video 360 Fee; False) ; (Media; 13; Default; True);'\nAcceptable values are provided in the following table:\nFee categoryFee TypeInvoiced optionCPM/Media Default Not permitted (leave blank) CPM/Media Third-Party Ad Server Not permitted (leave blank) CPM/Media DoubleVerify Permitted (True/False) CPM/Media Adsafe Not permitted (leave blank) CPM/Media Adxpose Not permitted (leave blank) CPM/Media Vizu Not permitted (leave blank) CPM/Media Aggregate Knowledge Not permitted (leave blank) CPM/Media Teracent Not permitted (leave blank) CPM/Media Evidon Not permitted (leave blank) CPM/Media Agency Trading Desk Fee Not permitted (leave blank) CPM/Media Adloox Permitted (True/False) CPM ShopLocal Required (True) CPM TrustMetrics Not permitted (leave blank) CPM Integral Ad Science Video Permitted (True/False) CPM MOAT Video Not permitted (leave blank) Media Display & Video 360 Fee Required (True) Media Media Cost Data Not permitted (leave blank) Media Scibids Fee Required (True) \n\nNote: Adloox was a previous name for the provider now known as Scope3.",
+                "sample_data": [
+                    "(Media; 0; Display & Video 360 Fee; True) ; (Media; 150; Default; False;) ; (Media; 150; Default; False;) ; (Media; 80.8; Default; False;)",
+                    "(Media; 0; Display & Video 360 Fee; True) ; (Media; 150; Default; False;) ; (Media; 150; Default; False;) ; (Media; 90.16; Default; False;)",
+                    "(CPM; 0.52; Third-Party Ad Server; False;) ; (Media; 0; Display & Video 360 Fee; True) ; (Media; 150; Default; False;) ; (Media; 150; Default; False;) ; (Media; 90.16; Default; False;)"
+                ]
+            },
+            "Bid Strategy Type": {
+                "type": "string",
+                "description": "The bidding strategy used by the line item, which is related to its objective. It might start as 'Fixed Bid' and later be changed to an optimization strategy like 'Maximize'.",
+                "dv360_definition": "Select one of the applicable bid strategies:Minimize: While spending the full budget, minimize CPA/CPC\nMaximize: While spending the full budget, maximize Impression Value or Quality Impression\nBeat: Meet or beat a goal of X CPA/CPC\nOptimize vCPM: Optimize for viewable CPM bid of X\nFixed: Specify a fixed bid of X",
+                "sample_data": [
+                    "Minimize",
+                    "Fixed",
+                    "Maximize"
+                ]
+            },
+            "Bid Strategy Value": {
+                "type": "float",
+                "description": "The goal bid value for 'Beat', 'Optimize VCPM', and 'Fixed' bid strategies. This field is not required for 'Minimize' or 'Maximize' strategies.",
+                "dv360_definition": "For Beat, Optimize VCPM, Fixed strategy types, choose a value for the goal bid.\nNote that no Bid Strategy Value is required for the Bid Strategy Type 'Minimize' or 'Maximize'",
+                "sample_data": [
+                    "0.0",
+                    "7.0",
+                    "21.5"
+                ]
+            },
+            "Bid Strategy Unit": {
+                "type": "string",
+                "description": "The unit for the bid strategy, such as CPA, CPC, or AV_VIEWED. This is applicable for 'Beat', 'Minimize', or 'Maximize' strategies.",
+                "dv360_definition": "For Beat, Minimize or Maximize strategy types, select the corresponding unit:CPA\nCPC\ncustom impr. value/cost\nCIVA\nIVO_TEN\nAV_VIEWED",
+                "sample_data": [
+                    "CPC",
+                    "CPA",
+                    "AV_VIEWED"
+                ]
+            },
+            "Bid Strategy Do Not Exceed": {
+                "type": "float",
+                "description": "A maximum CPM value that the bid strategy should not exceed. A value of 0 means this limit is not enabled. Applicable only for 'Minimize', 'Maximize', or 'Beat' strategies.",
+                "dv360_definition": "Set a 'do not exceed' CPM value. If 0, 'do not exceed' is not enabled. This is available only if the Bid Strategy is 'Minimize', 'Maximize' or 'Beat'.",
+                "sample_data": [
+                    "5.0",
+                    "0.0",
+                    "0.7"
+                ]
+            },
+            "Apply Floor Price For Deals": {
+                "type": "string",
+                "description": "Indicates whether to prioritize deals over open auction inventory.",
+                "dv360_definition": "Whether to prioritize deals over open auction inventoryTRUE\nFALSE",
+                "sample_data": [
+                    "False"
+                ]
+            },
+            "Creative Assignments": {
+                "type": "string, list",
+                "description": "A list of creatives assigned to the line item. After transformation, creative IDs are converted into descriptive names that include the creative's review status, allowing for quick assessment of campaign readiness.",
+                "dv360_definition": "List of Creative IDs to assigned to the entry.\nThis column uses Display & Video 360 API Creative resource IDs.\nList format = (Creative.creativeId; Creative.creativeId; etc.). This list is generated in ascending numerical order.\nOn upload, users can also include Campaign Manager 360 Placement IDs. Placement IDs should be preceded by the letters 'CM', ex 'CM789'.\n\nEx. (123;CM789;).",
+                "sample_data": [
+                    "FR - CarPromo - Consideration - Native 1200x627_0925_rectangle (APPROVAL_STATUS_PENDING_SERVABLE); FR - CarPromo - Consideration - Native 627x627_0925_square (APPROVAL_STATUS_PENDING_SERVABLE)",
+                    "NL - Auto Promo - Consideration - Xtra Social 320x480_0925 (APPROVAL_STATUS_PENDING_SERVABLE)",
+                    "FR - AO HOME - Consideration - Xtra Social 320x480_0825 (APPROVAL_STATUS_PENDING_SERVABLE)"
+                ]
+            },
+            "Geography Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of geographic locations to be included in targeting. After transformation, location IDs (e.g., '2056') are converted to human-readable names (e.g., 'France').",
+                "dv360_definition": "List of geographies to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_GEO_REGION.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Belgium",
+                    "Antwerp, Flanders, Belgium; East Flanders, Flanders, Belgium",
+                    "France"
+                ]
+            },
+            "Geography Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of geographic locations to be excluded from targeting. After transformation, location IDs are converted to human-readable names.",
+                "dv360_definition": "List of geographies to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_GEO_REGION.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Austria; France; India; Italy; Spain; Turkiye; United Kingdom",
+                    "Austria; France; India; Italy; Spain; Turkiye; United Kingdom; Antwerp, Flanders, Belgium; East Flanders, Flanders, Belgium",
+                    "Austria; France; India; Spain; Turkiye; United Kingdom"
+                ]
+            },
+            "Geography Regional Location List Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of regional location list IDs to be included in targeting.",
+                "dv360_definition": "List of geo regional location list ids to include. List format = (11; 22; 33;).",
+                "sample_data": []
+            },
+            "Geography Regional Location List Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of regional location list IDs to be excluded from targeting.",
+                "dv360_definition": "List of geo regional location list ids to exclude. List format = (11; 22; 33;).",
+                "sample_data": []
+            },
+            "Proximity Targeting": {
+                "type": "string, list of lists",
+                "description": "Defines proximity targeting using latitude, longitude, and radius.",
+                "dv360_definition": "List of proximity targets each in the format \"(Latitude; Longitude; Radius; Unit; FullAddress;);\". Latitude is between -90 and 90 degrees (inclusive); Longitude is between -180 and 180 degrees (inclusive); Radius is a distance between 1 and 500 (inclusive) in Unit; Unit can be \"mi\" or \"km\"; FullAddress is optional. For example: \"(38.907192; -77.03687; 1.0; mi; Washington D.C., DC, USA;); (40.712775; -74.005972; 20.5; km; 40.712775, -74.005972;); (20.000234; -56.675423; 5.0; mi; ;);\".",
+                "sample_data": []
+            },
+            "Proximity Location List Targeting": {
+                "type": "string, list of lists",
+                "description": "A list of proximity location lists to be targeted.",
+                "dv360_definition": "List of proximity list targets for insertion orders or Non-TrueView line items, each in the format \"(ProximityListId; Radius; Unit; );\". ProximityListId is a location list id under an advertiser's resources. Radius is a distance between 1 and 500 (inclusive) in Unit; Unit can be \"mi\" or \"km\"; There is a limit of targeting two location lists per entity along with Geography Regional Location Lists. For example: \"(10041691678; 20.0; mi;); (10038858567; 20.5; km;);\".",
+                "sample_data": [
+                    "0.0"
+                ]
+            },
+            "Language Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of languages to include in targeting. After transformation, language codes are converted to human-readable names.",
+                "dv360_definition": "List of languages to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_LANGUAGE.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "French",
+                    "Dutch",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/1061737/c/54979092/io/1018886920/li/21801747321/details"
+                ]
+            },
+            "Language Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of languages to exclude from targeting. After transformation, language codes are converted to human-readable names.",
+                "dv360_definition": "List of languages to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_LANGUAGE.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Device Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of device types to include in targeting (e.g., Computer, Smart_phone, Tablet). After transformation, device codes are converted to human-readable names.",
+                "dv360_definition": "List of devices to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for the following targeting types:\nTARGETING_TYPE_DEVICE_TYPE\nTARGETING_TYPE_DEVICE_MAKE_MODEL\nTARGETING_TYPE_OPERATING_SYSTEM\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Computer, Smart_phone, Tablet",
+                    "(DEVICE_TYPE_COMPUTER; DEVICE_TYPE_SMART_PHONE; DEVICE_TYPE_TABLET;)",
+                    "Computer, Connected_tv, Smart_phone, Tablet"
+                ]
+            },
+            "Device Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of device types to exclude from targeting (e.g., Connected_tv). After transformation, device codes are converted to human-readable names.",
+                "dv360_definition": "List of devices to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for the following targeting types:\nTARGETING_TYPE_DEVICE_TYPE\nTARGETING_TYPE_DEVICE_MAKE_MODEL\nTARGETING_TYPE_OPERATING_SYSTEM\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "(DEVICE_TYPE_CONNECTED_TV;)",
+                    "Use custom",
+                    "(DEVICE_TYPE_COMPUTER; DEVICE_TYPE_SMART_PHONE; DEVICE_TYPE_TABLET;)"
+                ]
+            },
+            "Browser Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of browsers to include in targeting. After transformation, browser IDs are converted to human-readable names.",
+                "dv360_definition": "List of browsers to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_BROWSER.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Browser Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of browsers to exclude from targeting. After transformation, browser IDs are converted to human-readable names.",
+                "dv360_definition": "List of browsers to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_BROWSER.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Digital Content Labels - Exclude": {
+                "type": "string, list",
+                "description": "Digital content labels to exclude from targeting, used for brand safety. Common practice is to exclude all except 'G' rated content to ensure brand safety.",
+                "dv360_definition": "List of the digital content labels to exclude. List format = (G;PG; etc.).G\nPG\nT\nMA\n?",
+                "sample_data": [
+                    "PG; T; MA; Not yet labeled;",
+                    "G;",
+                    "Not yet labeled;"
+                ]
+            },
+            "Brand Safety Sensitivity Setting": {
+                "type": "string",
+                "description": "The brand safety sensitivity level. Options include 'Do not block', 'Use Campaign Manager 360 Verification', or 'Use custom' settings to control content blocking.",
+                "dv360_definition": "Choose the sensitivity setting to block inventory based on the subject matter of its surrounding content.Do not block\nUse Campaign Manager 360 Verification\nUse custom",
+                "sample_data": [
+                    "Use custom",
+                    "Do not block"
+                ]
+            },
+            "Brand Safety Custom Settings": {
+                "type": "string, list",
+                "description": "A list of specific content categories to exclude for brand safety when 'Use custom' sensitivity is selected. Commonly all sensitive categories are excluded to protect brand reputation.",
+                "dv360_definition": "If the Brand Safety Sensitivity Setting is 'Use custom', specify the list of standard content classifiers. For example, (Sexual;Alcohol;Tobacco;etc.).Sexual\nDerogatory\nDownloads & Sharing\nWeapons\nGambling\nViolence\nSuggestive\nProfanity\nAlcohol\nDrugs\nTobacco\nPolitics\nReligion\nTragedy\nTransportation Accidents\nSensitive social issues\nShocking",
+                "sample_data": [
+                    "Alcohol; Derogatory; Downloads & Sharing; Drugs; Gambling; Politics; Profanity; Religion; Sensitive social issues; Sexual; Shocking; Suggestive; Tobacco; Tragedy; Transportation Accidents; Violence; Weapons;",
+                    "Hours",
+                    "Derogatory; Downloads & Sharing; Drugs; Gambling; Politics; Profanity; Religion; Sensitive social issues; Sexual; Shocking; Suggestive; Tobacco; Tragedy; Transportation Accidents; Violence; Weapons;"
+                ]
+            },
+            "Third Party Verification Services": {
+                "type": "string",
+                "description": "The third-party verification provider used for brand safety and viewability measurement (e.g., Integral Ad Science, DoubleVerify, Adloox/Scope3).",
+                "dv360_definition": "Third party verification services provider.None\nIntegral Ad Science\nDoubleVerify\nAdloox\nNote: Adloox was a previous name for the provider now known as Scope3.",
+                "sample_data": [
+                    "Dutch",
+                    "French"
+                ]
+            },
+            "Third Party Verification Labels": {
+                "type": "string, list",
+                "description": "Specific labels or categories provided by the selected third-party verification service.",
+                "dv360_definition": "If Third Party Verification Services is not \"None\", specify a list of labels supported by the selected provider.",
+                "sample_data": []
+            },
+            "Channel Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of channel names (whitelists) to include in targeting. These are pre-defined collections of sites or apps.",
+                "dv360_definition": "List of channels to include in targeting.\nThis column uses Display & Video 360 API Channel resource IDs.\nList format = (Channel.channelId; Channel.channelId; etc.).",
+                "sample_data": [
+                    "Whitelist Ads&Data",
+                    "Whitelist Roularta",
+                    "Whitelists : Sitelinks App Magnite (FR B2C)"
+                ]
+            },
+            "Channel Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of channel names (blacklists) to exclude from targeting. Common exclusions include low-quality sites, dictionaries, games, low CTR sites, and low viewability placements.",
+                "dv360_definition": "List of channels to exclude in targeting.\nThis column uses Display & Video 360 API Channel resource IDs.\nList format = (Channel.channelId; Channel.channelId; etc.).",
+                "sample_data": [
+                    "Blacklist; Good Games Performer; Dictionaries; Weather/meteo; Jeux Online; Low Viewability  <55%; Low CTR <0.04%; Non-Reportable Sites and Apps",
+                    "Good Games Performer; Dictionaries; Jeux Online; Low Viewability  <55%; Low CTR <0.04%",
+                    "2"
+                ]
+            },
+            "Site Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of specific website URLs to include in targeting.",
+                "dv360_definition": "List of sites to include in targeting. The list is strings of URLs.\nList format = (someurl.com; someurltwo.com; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": [
+                    "7sur7.be; demorgen.be; guide-epargne.be; hln.be; humo.be; immoweb.be;",
+                    "amazon.com.be; autodoc.be; bol.com/be; candicar.eu; carcare24.be; cardetail.be; oscaro.com;",
+                    "femmesdaujourdhui.be; flair.be; gael.be; levif.be; passionsante.be; plusmagazine.be; trends.levif.be; weekend.levif.be;"
+                ]
+            },
+            "Site Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of specific website URLs to exclude from targeting.",
+                "dv360_definition": "List of sites to exclude in targeting. The list is strings of URLs.\nList format = (someurl.com; someurltwo.com; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": [
+                    "melty.fr; wielerkrant.be;",
+                    "lapizzeriacombslaville.fr; nouveautes-tele.com; voetbalnieuws.be;",
+                    "lapizzeriacombslaville.fr; nouveautes-tele.com;"
+                ]
+            },
+            "App Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of specific mobile apps to include in targeting. After transformation, app IDs are converted to readable app identifiers with platform prefixes.",
+                "dv360_definition": "List of apps to include in targeting. The list is concatenated strings of app platform and app platform ID.\nThe following values are used to define the app platform:\nAPP (This encompasses both Android Play store and Apple App store platforms)\nROKU_APP\nAMAZON_FIRETV_APP\nXBOX_APP\nPLAYSTATION_APP\nAPPLE_TV_APP\nSAMSUNG_TV_APP\nANDROID_TV_APP\nGENERIC_CTV_APP\nLG_TV_APP\nVIZIO_TV_APP\nThe ID is provided by the relevant platform, such as a bundle ID from Android's Play store (example: com.google.android.gm) or a App ID from Apple's App store (example: 422689480).The concatenated string of app platform and ID is separated by a colon, for example: APP:com.google.android.gm.\nList format = (APP:com.google.android.gm; APP:422689480; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": [
+                    "APP:403025567; APP:403354213; APP:420654412; APP:be.persgroep.android.news.mobile7sur7; APP:be.persgroep.android.news.mobilehln; APP:com.produpress.immoweb; APP:demorgen;",
+                    "APP:403354213; APP:420654412; APP:be.persgroep.android.news.mobile7sur7; APP:com.produpress.immoweb; APP:demorgen;",
+                    "APP:com.bft.easyaxs; APP:com.came.crpconnectapp; APP:com.niceforyou.mynicepro; APP:com.simplyconect.installer; APP:com.simplyconnect; APP:com.sonepar.mobile.shop.fr.connect.prod; APP:com.webshop; APP:eu.hormann.ast.bluecontrol; APP:se.comlink.hormann; APP:yess.yess;"
+                ]
+            },
+            "App Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of specific mobile apps to exclude from targeting. After transformation, app IDs are converted to readable app identifiers with platform prefixes.",
+                "dv360_definition": "List of apps to exclude in targeting. The list is concatenated strings of app platform and app platform ID.\nThe following values are used to define the app platform:\nAPP (This encompasses both Android Play store and Apple App store platforms)\nROKU_APP\nAMAZON_FIRETV_APP\nXBOX_APP\nPLAYSTATION_APP\nAPPLE_TV_APP\nSAMSUNG_TV_APP\nANDROID_TV_APP\nGENERIC_CTV_APP\nLG_TV_APP\nVIZIO_TV_APP\nThe ID is provided by the relevant platform, such as a bundle ID from Android's Play store (example: com.google.android.gm) or a App ID from Apple's App store (example: 422689480).The concatenated string of app platform and ID is separated by a colon, for example: APP:com.google.android.gm.\nList format = (APP:com.google.android.gm; APP:422689480; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": [
+                    "APP:com.veraxen.goodssort; APP:solitaire.card.games.klondike.free.patience.classic.challenge;"
+                ]
+            },
+            "App Collection Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of app categories or collections to include in targeting.",
+                "dv360_definition": "List of app collections to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_APP_CATEGORY.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.).",
+                "sample_data": []
+            },
+            "App Collection Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of app categories or collections to exclude from targeting.",
+                "dv360_definition": "List of app collections to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_APP_CATEGORY.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.).",
+                "sample_data": []
+            },
+            "Category Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of content categories to include in targeting. After transformation, category IDs are converted to human-readable names.",
+                "dv360_definition": "List of categories to include in targeting. This column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CATEGORY.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "1416;",
+                    "467;",
+                    "47;"
+                ]
+            },
+            "Category Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of content categories to exclude from targeting. After transformation, category IDs are converted to human-readable names.",
+                "dv360_definition": "List of categories to exclude in targeting. This column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CATEGORY.List format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Content Genre Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of content genres to include in targeting for video and audio placements.",
+                "dv360_definition": "List of content genres to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CONTENT_GENRE\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Content Genre Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of content genres to exclude from targeting for video and audio placements.",
+                "dv360_definition": "List of content genres to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CONTENT_GENRE\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Keyword Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of keywords to target. Ads will show on pages containing these keywords.",
+                "dv360_definition": "List of keyword strings to include in targeting.\nThis list is generated in ascending alphabetical order.",
+                "sample_data": [
+                    "Blacklist; Dictionaries; Jeux Online; Low Viewability  <55%; Low CTR <0.04%"
+                ]
+            },
+            "Keyword Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of keywords to exclude. Ads will not show on pages containing these keywords.",
+                "dv360_definition": "List of keyword strings to exclude in targeting.\nThis list is generated in ascending alphabetical order.",
+                "sample_data": [
+                    "54979092.0"
+                ]
+            },
+            "Keyword List Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of negative keyword list names to exclude from targeting. These are pre-defined lists of keywords that should be avoided.",
+                "dv360_definition": "List of negative keyword lists to exclude in targeting.\nThis column uses Display & Video 360 API NegativeKeywordList resource IDs.\nList format = (NegativeKeywordList.negativeKeywordListId; NegativeKeywordList.negativeKeywordListId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "NL negative keywords list",
+                    "FR negative keywords list"
+                ]
+            },
+            "Optimized Targeting": {
+                "type": "string",
+                "description": "Indicates whether optimized targeting (similarity audience targeting) is enabled. This can only be activated when the bid strategy is set to 'Maximize' and allows DV360 to expand targeting to similar users.",
+                "dv360_definition": "Enable optimized targeting.TRUE\nFALSE\n\nOptimized targeting is not compatible with all bid strategies. This column must be 'FALSE' if:'Bid Strategy Type' is 'Fixed'\n'Bid Strategy Type' is 'Optimized vCPM'\n'Bid Strategy Type' is 'Maximum' and 'Bid Strategy Unit' is 'CIVA', 'IVO_TEN', or 'AV_VIEWED'",
+                "sample_data": [
+                    "True",
+                    "False"
+                ]
+            },
+            "Audience Targeting - Include": {
+                "type": "string, list of list of pairs",
+                "description": "Transforms cryptic audience targeting ID strings like \"(1234567;30;)\" into readable audience information like \"(Young Adults 18-34;30;)\" showing the actual audience name with recency settings.",
+                "dv360_definition": "List of audience lists to include in targeting.\nThis column uses Display & Video 360 API FirstPartyAndPartnerAudience resource IDs.\nFor first-party audience lists, each audience is listed as a pair of FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId and recency setting. A pair is (1;1d;), where 1d is a sample recency representing 1 day recency. Recency is not available for third-party audiences, so the list format is (3;);(4;);. To \"AND\" and \"OR\" groups of audiences, follow this example: To combine pairs with and without recency: '((1;1d;);(2;365d;));((3;);(4;5m;);(5;all;));'. This means (list 1 with 1 day recency OR list 2 with 365day recency ) AND (list 3 without a specified recency OR list 4 with 5 minute recency OR list 5 with all users).\nValid recency values are:\nall\n1m\n5m\n10m\n15m\n30m\n1h\n2h\n3h\n6h\n12h\n1d\n2d\n3d\n5d\n7d\n10d\n14d\n15d\n21d\n28d\n30d\n45d\n60d\n90d\n120d\n180d\n270d\n365d",
+                "sample_data": [
+                    "Yuzzu - Website Visitor - Product Page - Home; Yuzzu - Website Visitor - Product Page - Home - 30 days",
+                    "YUzzu - Micro Conversion (Start Simulation) - Home",
+                    "Yuzzu - Website Visitor - Product Page - Auto; Yuzzu - Website Visitor - Product Page - Auto (30 days)"
+                ]
+            },
+            "Audience Targeting - Exclude": {
+                "type": "string, list of list of pairs",
+                "description": "Transforms cryptic audience targeting ID strings like \"(1234567;30;)\" into readable audience information like \"(Young Adults 18-34;30;)\" showing the actual audience name with recency settings.",
+                "dv360_definition": "List of audience lists to exclude in targeting.\nThis column uses Display & Video 360 API FirstPartyAndPartnerAudience resource IDs.\nEach audience is listed as a pair of FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId and recency setting, if the audience list is a 1P audience list. A pair is (1;1d;), where 1d is a sample recency representing 1 day recency. However, for 3P audiences, recency is not available, so the list format is (3;);(4;);.\nList format = ((FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId; recency optional;); (FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId; recency optional;);)\nExample: \"(1;1d;);(2;);\".\nValid recency values are:\nall\n1m\n5m\n10m\n15m\n30m\n1h\n2h\n3h\n6h\n12h\n1d\n2d\n3d\n5d\n7d\n10d\n14d\n15d\n21d\n28d\n30d\n45d\n60d\n90d\n120d\n180d\n270d\n365d",
+                "sample_data": [
+                    "Yuzzu - Converter - Auto; Yuzzu - Website Visitor - Product Page - Auto; YUzzu - Micro Conversion (Start Simulation) - Auto",
+                    "YUzzu - Micro Conversion (Start Simulation) - Home; YUzzu - Converter - Home; Yuzzu - Website Visitor - Declined user in funnels - Home",
+                    "Yuzzu - Website Visitor - Product Page - Home; YUzzu - Converter - Home; Yuzzu - Website Visitor - Declined user in funnels - Home; Yuzzu - Website Visitor - Product Page - Home - 30 days"
+                ]
+            },
+            "Affinity & In Market Targeting - Include": {
+                "type": "string, list",
+                "description": "No description available.",
+                "dv360_definition": "List of affinity and/or in-market audience lists to include.\nAudience list IDs can be retrieved from the Display & Video 360 interface.\nList format = (Audience ID; Audience ID; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "4477129;",
+                    "4490209;",
+                    "4495609;"
+                ]
+            },
+            "Affinity & In Market Targeting - Exclude": {
+                "type": "string, list",
+                "description": "No description available.",
+                "dv360_definition": "List of affinity and/or in-market audience lists to exclude.\nAudience list IDs can be retrieved from the Display & Video 360 interface.\nList format = (Audience ID; Audience ID; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Austria; France; India; Spain; Turkiye; United Kingdom",
+                    "4493329; 4494889; 4571929;",
+                    "4493329; 4494889;"
+                ]
+            },
+            "Combined Audience Targeting": {
+                "type": "string, list",
+                "description": "List of combined audience descriptive names, turning technical references into understandable audience segment descriptions that explain who is being targeted.",
+                "dv360_definition": "List of combined audience lists to target.\nThis column uses Display & Video 360 API CombinedAudience resource IDs.\nList format = (CombinedAudience.combinedAudienceId; CombinedAudience.combinedAudienceId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Combined Audiences : Affinity \"Auto Enthusiasts\" + In-Market \"Auto Insurance\"",
+                    "Combined Audiences : Affinity \"Auto Enthusiasts\" + In-Market \"Auto&Vehicle\"",
+                    "Combined Audiences : Affinity \"Vehicles&Transportations\" + In-Market \"Auto Repair & Maintenance\""
+                ]
+            },
+            "Custom List Targeting": {
+                "type": "string, list",
+                "description": "No description available.",
+                "dv360_definition": "List of custom lists to target.\nThis column uses Display & Video 360 API CustomList resource IDs.\nList format = (CustomList.customListId; CustomList.customListId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "820343096;",
+                    "820338941;",
+                    "821220642;"
+                ]
+            },
+            "Inventory Source Targeting - Authorized Seller Options": {
+                "type": "string",
+                "description": "No description available.",
+                "dv360_definition": "Setting to target authorized direct sellers, authorized direct seller and resellers, or authorized seller + unknown. \"Authorized Direct\" means only authorized sellers will be targeted. \"Authorized Direct Sellers And Resellers\" means targeting the authorized sellers and resellers. \"Authorized and Non-Participating Publisher\" means it will target authorized sellers, resellers, and unknown sellers.Authorized Direct Sellers\nAuthorized Direct Sellers And Resellers\nAuthorized and Non-Participating Publisher",
+                "sample_data": [
+                    "Authorized Direct Sellers And Resellers",
+                    "Authorized Direct Sellers",
+                    "Authorized and Non-Participating Publisher"
+                ]
+            },
+            "Inventory Source Targeting - Include": {
+                "type": "string, list",
+                "description": "List of inventory sources, exchanges, and sub-exchanges to include in targeting.",
+                "dv360_definition": "List of inventory sources, exchanges, and sub-exchanges to include in targeting.\nThis column uses Display & Video 360 API InventorySource resource IDs, published exchange IDs, and Display & Video 360 API TargetingOption resource IDs of targeting type TARGETING_TYPE_SUB_EXCHANGE.\nList format = (InventorySource.inventorySourceId; exchangeId; TargetingOption.targetingOptionId; etc.)",
+                "sample_data": [
+                    "Google Ad Manager; Magnite DV+; Xandr - Monetize SSP (AppNexus); Improve Digital; BidSwitch; TeadsTv; Waze",
+                    "Google Ad Manager; Magnite DV+; Xandr - Monetize SSP (AppNexus); Improve Digital; TeadsTv; Waze",
+                    "Google Ad Manager; Magnite DV+; OpenX; Xandr - Monetize SSP (AppNexus); Improve Digital; TeadsTv; Waze"
+                ]
+            },
+            "Inventory Source Targeting - Exclude": {
+                "type": "string, list",
+                "description": "List of inventory sources, exchanges, and sub-exchanges to include in targeting.",
+                "dv360_definition": "List of inventory sources, exchanges, and sub-exchanges to exclude in targeting.\nThis column uses Display & Video 360 API InventorySource resource IDs, published exchange IDs, and Display & Video 360 API TargetingOption resource IDs of targeting type TARGETING_TYPE_SUB_EXCHANGE.\nList format = (InventorySource.inventorySourceId; exchangeId; TargetingOption.targetingOptionId; etc.)",
+                "sample_data": [
+                    "OpenX; SpotX; YieldOne; Magnite CTV; FreeWheel SSP; Equativ; DT Fairbid; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn; 123",
+                    "OpenX; SpotX; YieldOne; BidSwitch; Magnite CTV; FreeWheel SSP; Equativ; DT Fairbid; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn; 123",
+                    "SpotX; YieldOne; BidSwitch; Magnite CTV; FreeWheel SSP; Equativ; DT Fairbid; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn; 123"
+                ]
+            },
+            "Inventory Source Targeting - Target New Exchanges": {
+                "type": "string",
+                "description": "No description available.",
+                "dv360_definition": "Setting to target new exchanges.True\nFalse",
+                "sample_data": [
+                    "False",
+                    "True"
+                ]
+            },
+            "Private Deal Group Targeting Include": {
+                "type": "string, list",
+                "description": "No description available.",
+                "dv360_definition": "List of Grouped Deal IDs to include in targeting. Grouped Deal IDs can be found in the Grouped Deals section of My Inventory and the Groups section of Inventory Source settings in line items, insertion orders, and campaigns.\nList format = (DealGroupId; DealGroupId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Daypart Targeting": {
+                "type": "string, list",
+                "description": "Specifies which days and times the line item should run. Useful for targeting specific time windows.",
+                "dv360_definition": "List of IDs, where each daypart ID is constructed in the following format:\ndaypart_id = base_dayparting_id\n+ days_since_monday * 10000\n+ start * 100\n+ end\n\nbase_dayparting_id = 300000\ndays_since_monday: 0=Monday, 1=Tuesday, ..., 6=Sunday\nstart: 0..95 (00:00--23:45) an integer from 0-95, representing 15min slots\nend: 1..96 (00:15--24:00); an integer from 0-95, representing 15min slots\nstart < end\nFor new entities, times will be set in the timezone of your users(i.e., \"Local\"). For existing entities, the timezone will not be changed.\nThis list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Daypart Targeting Time Zone": {
+                "type": "string",
+                "description": "The timezone used for daypart targeting. Can be 'Local' (user's timezone) or 'Advertiser' (advertiser's timezone).",
+                "dv360_definition": "Timezone to use for daypart targeting.\n\nSelect one of the following values:Local\nAdvertiser\nTrueView and Demand Gen line items can only be 'Advertiser'.",
+                "sample_data": []
+            },
+            "Environment Targeting": {
+                "type": "string, list",
+                "description": "Specifies where ads can appear: 'Web' (desktop/mobile web), 'Web Not Optimized' (non-mobile-optimized sites), or 'App' (mobile apps).",
+                "dv360_definition": "List of environments to target. Select one or more of the acceptable values. Please note that 'Web Not Optimized' cannot be selected without selecting 'Web'.Web\nWeb Not Optimized\nApp",
+                "sample_data": [
+                    "Web; App;",
+                    "Web;",
+                    "0"
+                ]
+            },
+            "Viewability Omid Targeting Enabled": {
+                "type": "string",
+                "description": "Indicates whether to target only impressions measurable through the Open Measurement standard (OMID) for viewability tracking.",
+                "dv360_definition": "Enables targeting only impressions that are measurable through the open Measurement standard.TRUE\nFALSE",
+                "sample_data": [
+                    "False"
+                ]
+            },
+            "Viewability Targeting Active View": {
+                "type": "string",
+                "description": "The minimum predicted viewability percentage to target (e.g., 0.7 = 70%). Higher values improve viewability but may reduce scale.",
+                "dv360_definition": "Target predicted viewability percentages. Percentages are represented as floats. One of {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9}",
+                "sample_data": [
+                    "0.8",
+                    "0.5",
+                    "0.7"
+                ]
+            },
+            "Position Targeting - On Screen": {
+                "type": "string, list",
+                "description": "Targets ad positions on the screen: 'Above the fold', 'Below the fold', or 'Unknown'.",
+                "dv360_definition": "On screen ad positions targeting. Select one or more of the acceptable values:Above the fold\nBelow the fold\nUnknown",
+                "sample_data": [
+                    "BENL - InMarket : Banking Services",
+                    "BENL - InMarket : Auto Insurance",
+                    "BEFR - InMarket : Banking Services"
+                ]
+            },
+            "Position Targeting - Display Position In Content": {
+                "type": "string, list",
+                "description": "Targets specific positions for display ads: 'In-Article', 'In-Feed', 'In-Banner', 'Interstitial', 'Native', etc.",
+                "dv360_definition": "Display ad content positions to target. Select one or more of the acceptable values:In-Article\nIn-Feed\nIn-Banner\nInterstitial\nUnknown",
+                "sample_data": [
+                    "Unknown; In-Banner; In-Article; In-Feed; Native Unknown; Native Recommendation; Native Peripheral; Native In-Feed; Native In-Article;",
+                    "Unknown; In-Banner; In-Article; In-Feed;"
+                ]
+            },
+            "Position Targeting - Video Position In Content": {
+                "type": "string, list",
+                "description": "Targets specific positions for video ads: 'Pre-Roll', 'Mid-Roll', 'Post-Roll', 'In-Article', 'In-Feed', 'In-Banner', 'Out-Stream', etc.",
+                "dv360_definition": "Video ad content positions to target. Select one or more of the acceptable values:In-Article\nIn-Feed\nIn-Banner\nInterstitial\nUnknown Out-Stream\nPre-Roll\nMid-Roll\nPost-Roll\nUnknown In-Stream",
+                "sample_data": [
+                    "Unknown Out-Stream; In-Banner; In-Article; In-Feed; Pre-Roll; Mid-Roll; Post-Roll;",
+                    "Pre-Roll; Mid-Roll; Post-Roll;"
+                ]
+            },
+            "Position Targeting - Audio Position In Content": {
+                "type": "string, list",
+                "description": "Targets specific positions for audio ads: 'Pre-Roll', 'Mid-Roll', 'Post-Roll', or 'Unknown'.",
+                "dv360_definition": "Audio ad content positions to target. Select one or more of the acceptable values:Pre-Roll\nMid-Roll\nPost-Roll\nUnknown",
+                "sample_data": []
+            },
+            "Video Player Size Targeting": {
+                "type": "string, list",
+                "description": "Targets video ads based on player size: 'Small', 'Large', 'HD', or 'Unknown'.",
+                "dv360_definition": "List of video ad player size to target. Select one or more of the acceptable values:unknown\nsmall\nlarge\nHD",
+                "sample_data": [
+                    "False",
+                    "Small; Large; HD; Unknown;",
+                    "Large; HD;"
+                ]
+            },
+            "Content Duration Targeting": {
+                "type": "string, list",
+                "description": "Targets videos based on their duration in minutes (0-1, 1-5, 5-15, 15-30, 30-60, 60+, or unknown).",
+                "dv360_definition": "List of content durations to target. Unit value is minutes. Select one or more of the acceptable values:0-1\n1-5\n5-15\n15-30\n30-60\n60+\nunknown",
+                "sample_data": []
+            },
+            "Content Stream Type Targeting": {
+                "type": "string, list",
+                "description": "Targets content based on whether it's 'livestream' or 'on-demand'.",
+                "dv360_definition": "List of content stream types to target. Select one or more of the acceptable values:livestream\non-demand",
+                "sample_data": [
+                    "(Media; 0; Display & Video 360 Fee; True) ; (Media; 150; Default; False;) ; (Media; 150; Default; False;) ; (Media; 90.16; Default; False;)"
+                ]
+            },
+            "Audio Content Type Targeting": {
+                "type": "string, list",
+                "description": "Targets specific audio content types: 'online radio', 'streaming music', 'podcasts', or 'unknown'.",
+                "dv360_definition": "List of audio content type to target. Select one or more of the acceptable values:unknown\nonline radio\nstreaming music\npodcasts",
+                "sample_data": []
+            },
+            "Demographic Targeting Gender": {
+                "type": "string, list",
+                "description": "Targets specific genders: Male, Female, or Unknown. Used for demographic-based campaign optimization.",
+                "dv360_definition": "List of genders to target. Select one or more of the acceptable values:Female\nMale\nUnknown",
+                "sample_data": [
+                    "Male; Female;",
+                    "Female;",
+                    "Male;"
+                ]
+            },
+            "Demographic Targeting Age": {
+                "type": "string, list",
+                "description": "Targets specific age ranges (e.g., 18-25, 25-35). Important for demographic segmentation in analysis.",
+                "dv360_definition": "Target to a user age range. Specify a from/to range by selecting a single From age and a single To age and whether to include unknown ages true/false. See the list of acceptable From/To ages.\nExample 1: to target 18-55 and include unknown ages, specify the format {From; To ; Include unknown True/False} = 18;55;true;\nExample 2: to target only users >35 years old and exclude unknown ages, specify the following = 35;+;false;.\nAcceptable values for From:18\n25\n35\n45\n55\n65\n\nAcceptable values for To:25\n35\n45\n55\n65\n+",
+                "sample_data": [
+                    "25; 55; False;",
+                    "18; 45; False;",
+                    "18; 35; False;"
+                ]
+            },
+            "Demographic Targeting Household Income": {
+                "type": "string, list",
+                "description": "Targets households based on income percentile (Top 10%, 11-20%, etc.). Useful for premium product campaigns.",
+                "dv360_definition": "Target a household income range. Specify a from/to range by selecting a single Top_of_Range income range and a single Bottom_of_Range income range and whether to include households with unknown income true/false. See the list of acceptable Top_of_Range/Bottom_of_Range ranges.\nExample 1: to target the top 10% to 50% of households and include households with unknown income, specify the format {Top_of_Range; Bottom_of_Range; Include unknown True/False} = Top 10%;41-50%;true;\nExample 2: to target only the lower 50% of households and exclude households with unknown income, specify the format {Top_of_Range; Bottom_of_Range; Include unknown True/False} = Lower 50%;Lower 50%;true;\nAcceptable values for Top_of_Range/Bottom_of_Range:Top 10%\n11-20%\n21-30%\n31-40%\n41-50%\nLower 50%",
+                "sample_data": []
+            },
+            "Demographic Targeting Parental Status": {
+                "type": "string, list",
+                "description": "Targets based on parental status: Parent, Not a parent, or Unknown. Useful for family-oriented products.",
+                "dv360_definition": "List of parental status to target. Select one or more of the acceptable values.Parent\nNot a parent\nUnknown",
+                "sample_data": [
+                    "Parent;"
+                ]
+            },
+            "Connection Speed Targeting": {
+                "type": "string",
+                "description": "Targets users based on their connection speed (2G, 3G, 4G, DSL, or All). Can affect ad format delivery.",
+                "dv360_definition": "Target to a specific connection speed. Select one of the acceptable values:All\n2G\n3G\nDSL\n4G",
+                "sample_data": []
+            },
+            "Carrier Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of ISPs or mobile carriers to include in targeting. After transformation, carrier IDs are converted to names.",
+                "dv360_definition": "List of ISPs or Carriers to target.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CARRIER_AND_ISP.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Carrier Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of ISPs or mobile carriers to exclude from targeting. After transformation, carrier IDs are converted to names.",
+                "dv360_definition": "List of ISPs or Carriers to exclude.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CARRIER_AND_ISP.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Bid Multipliers": {
+                "type": "string, list of lists",
+                "description": "Bid adjustments for specific targeting criteria (deprecated for new line items). Allows increasing or decreasing bids based on audience, device, location, etc.",
+                "dv360_definition": "Bid multipliers are no longer supported for new line items. This column is no longer writable.\nAll bid multipliers for this entry. List format = (row type;criteria ID;bid multiplier value); (row type;criteria ID;bid multiplier value);. Bid multiplier values can range between 0.1 and 10.0. Acceptable row types and their corresponding criteria ID's are listed in the following table:Row TypeDimensionCriteria IDapp App A concatenated string of app platform and app platform ID. The concatenated string of app platform and ID is separated by a colon, for example: APP:com.google.android.gm. The following values are used to define the app platform:APP (This encompasses both Android Play store and Apple App store platforms)\nROKU_APP\nAMAZON_FIRETV_APP\nXBOX_APP\nPLAYSTATION_APP\nAPPLE_TV_APP\nSAMSUNG_TV_APP\nANDROID_TV_APP\nGENERIC_CTV_APP\nLG_TV_APP\nVIZIO_TV_APP\nThe concatenated string of app platform and ID is separated by a colon. eg. (app;APP:com.google.android.gm;1.0);(app;APP:422689480;2.5); site URL String of site URL. eg. (site;'someurl.com';1.0);(site;'someurltwo.com';2.5); user_list Audience List The user list ID. eg. (user_list;UserList.id;1.0);(user_list;UserList.id;2.5); user_interest Audience List The user interest ID. eg. (user_interest;UserList.id;1.0);(user_interest;UserList.id;2.5); custom_affinity Audience List The custom affinity ID. eg. (custom_affinity;CustomAffinity.id;1.0);(custom_affinity;CustomAffinity.id;2.5); day_part Day Part The day part ID is defined in the Daypart Targeting column. eg 314159 represents \"Tuesday, 10:15 AM - 2:45 PM.\" eg. (day_part;314159;1.0);(day_part;302312;2.5); age_range Demographics The age range, separated as From-To. Acceptable values are:18-24\n25-34\n35-44\n45-54\n55-64\n65+\nUnknown\neg. (age_range;55-64;1.0);(age_range;65+;2.5); gender Demographics The gender. Acceptable values are:Male\nFemale\nUnknown\neg. (gender;Male;1.0);(gender;Female;2.5); parental_status Demographics The parental status. Acceptable values are:Parent\nNot a parent\nUnknown\neg. (parental_status;Not a parent;1.0); household_income Demographics The household income percentile range. Acceptable values are:Top 10%\n11-20%\n21-30%\n31-40%\n41-50%\nLower 50%\nUnknown\neg. (household_income;Top 10%;1.0);(household_income;Unknown;2.5); device_type Device Type The device type. Acceptable values are:Computer\nSmartphone\nTablet\nConnected TV\nConnected Device\neg. (device_type;Computer;1.0);(device_type;Tablet;2.5); geo Geography The geography location ID. eg. (geo;2840;1.0); private_deal Private Deal The private deal targeting ID. eg. (private_deal;1016301;1.0); private_deal Private Deal The private deal targeting ID. eg. (private_deal;1016301;1.0); public_exchange Public Exchange The public exchange ID. eg. (public_exchange;17;1.0); unclassified_exchange Unclassified Exchange The unclassified exchange target ID (= 5000 + exchange_id).eg. (unclassified_exchange;5017;1.0); sub_exchange Sub-exchange The format is [exchange_id]-[sub_exchange_targeting_id].eg. (sub_exchange;38-4515403;1.0);",
+                "sample_data": []
+            },
+            "Partner Revenue Model": {
+                "type": "string",
+                "description": "The revenue model for partner fees: TMCM (Total Media Cost Markup), MCM (Media Cost Markup), or CPM. Used in conjunction with Partner Revenue Amount.",
+                "dv360_definition": "A partner revenue model is the mechanism for controlling how revenue is calculated in Bid Manager. Use the partner revenue model to track the markup for your service fees. Column Partner Revenue Amount should be specified when column Partner Revenue Model is included.TMCM - Total Media Cost Markup\nMCM - Media Cost Markup\nCPM - Cost Per thousand impressions",
+                "sample_data": [
+                    "TMCM"
+                ]
+            },
+            "Markup": {
+                "type": "string",
+                "description": "The markup percentage or amount applied to media costs. This is equivalent to 'Partner Revenue Amount' and represents the agency fee or margin.",
+                "dv360_definition": "markup refers to the percentage increase added to media cost \nto calculate the final price charged to a client.",
+                "sample_data": [
+                    "0",
+                    "AO sept/dec - Consideration - XtraSocial@CTLM00065_PAD_XtraSocial_Consideration"
+                ]
+            },
+            "Partner Revenue Amount": {
+                "type": "float",
+                "description": "The revenue amount or percentage (markup) charged to the client on top of media costs. This field should be referenced when analyzing profitability or when users ask about 'markup'.",
+                "dv360_definition": "A positive float value corresponding to the Partner Revenue Model. Only applicable when column Partner Revenue Model is specified.",
+                "sample_data": [
+                    "0"
+                ]
+            },
+            "Conversion Floodlight Activity Ids": {
+                "type": "string, list of lists",
+                "description": "A list of Floodlight activities used for conversion tracking, including post-view and post-click attribution windows (in minutes).",
+                "dv360_definition": "The floodlight activities used for conversions and related settings.\nThis column uses Display & Video 360 API FloodlightActivity resource IDs and measurements, in minutes, of post-view and post-click windows.\nList of list format = ((FloodlightActivity.floodlightActivityId; view_window_minutes; click_window_minutes;);(FloodlightActivity.floodlightActivityId; view_window_minutes; click_window_minutes;);).\nThis field cannot be update if the 'Algorithm Id' column is set. Attempts to do so will result in an error",
+                "sample_data": [
+                    "(11601229; 129600; 129600;);",
+                    "(11600599; 129600; 129600;);",
+                    "(11600599; 129600; 129600;); (11600446; 129600; 129600;);"
+                ]
+            },
+            "Conversion Counting Type": {
+                "type": "string",
+                "description": "Defines how conversions are counted: 'Count all', 'Count post-click', or a specific percentage. Affects conversion attribution methodology.",
+                "dv360_definition": "Choose the kinds of conversions that are counted.Count all\nCount post-click\nCount %",
+                "sample_data": [
+                    "Count all"
+                ]
+            },
+            "Timestamp": {
+                "type": "integer",
+                "description": "The last modified timestamp for the line item. Used for versioning and tracking when changes were made to the configuration.",
+                "dv360_definition": "The timestamp for the entry.For non-Demand Gen line items, this is a \"last modified\" timestamp used by the system to verify that the entry has not changed between downloading and uploading.\nFor Demand Gen line items, this is timestamp of the file generation and is used to verify that the line item was downloaded recently, but does not guarantee that the line item has not been updated since the initial download.",
+                "sample_data": [
+                    "2025-07-14T07:22:35.926000",
+                    "2025-07-14T07:23:34.655000",
+                    "2025-07-14T07:23:57.388000"
+                ]
+            },
+            "TrueView Content Filter": {
+                "type": "string",
+                "description": "Content filtering level for TrueView and Demand Gen campaigns: 'Limited', 'Standard', or 'Expanded'. Affects brand safety and inventory availability.",
+                "dv360_definition": "TrueView or Demand Gen content filter.\n\nSelect one of the following values:Limited\nStandard\nExpanded",
+                "sample_data": [
+                    "Standard",
+                    "Expanded"
+                ]
+            }
+        },
+        "metadata_fields_Insertion_orders": {
+            "Io Id": {
+                "type": "integer",
+                "description": "The unique identifier for the insertion order. This ID is crucial for linking line items to their parent insertion order and for budget analysis.",
+                "dv360_definition": "Numeric ID value of the insertion order. If left blank, a new Insertion Order ID will be created and a unique ID will be assigned. Optionally, when creating a new Insertion Order, you can use a custom identifier for the purpose of assigning Line Items to the new Insertion Order. The format for a custom identifier is \"ext[custom identifier]\", for example, ext123. When the file is uploaded and processed, all custom identifiers will be replaced with DBM-assigned IDs and the objects will be associated (for example, Line Item to Insertion Order) based on the custom identifiers.",
+                "sample_data": [
+                    "8787990",
+                    "9001557",
+                    "8787988"
+                ]
+            },
+            "Partner ID": {
+                "type": "integer",
+                "description": "The unique identifier for the partner account. This field is used to filter data for a specific partner and for high-level aggregation.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "373"
+                ]
+            },
+            "Advertiser Id": {
+                "type": "integer",
+                "description": "The unique identifier for the advertiser associated with this insertion order. Links IOs to specific advertisers for analysis.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "3573235",
+                    "1420623980",
+                    "742781690"
+                ]
+            },
+            "Advertiser Name": {
+                "type": "string",
+                "description": "The name of the advertiser. Useful for quickly identifying the advertiser in reports without needing to join with other tables.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "DCM - Ansell",
+                    "DCM - Bemini",
+                    "DCM - Yuzzu"
+                ]
+            },
+            "Campaign Id": {
+                "type": "integer",
+                "description": "The unique identifier for the campaign associated with this insertion order. Links IOs to their parent campaigns.",
+                "dv360_definition": "Numeric ID value of the campaign. You can specify a custom identifier (for example, \"ext[custom campaign identifier]\") for a campaign that you are creating at the same time as this insertion order.",
+                "sample_data": [
+                    "2812665",
+                    "53716239",
+                    "55181175"
+                ]
+            },
+            "Campaign Name": {
+                "type": "string",
+                "description": "The name of the campaign. Provides a human-readable identifier for the campaign in reporting and analysis.",
+                "dv360_definition": "Campaign Name of the insertion order",
+                "sample_data": [
+                    "Ansell - PPE Regulation",
+                    "Back To School",
+                    "2025 - AWARENESS (All products)"
+                ]
+            },
+            "dv360_link": {
+                "type": "string",
+                "description": "A direct URL to the insertion order in the DV360 interface. This allows for quick access and verification of the IO's settings.",
+                "dv360_definition": "Direct URL link to open the entity in DV360 interface for easy navigation.",
+                "sample_data": [
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/3573235/c/2812665/io/8787990/details",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/3573235/c/2812665/io/9001557/details",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/3573235/c/2812665/io/8787988/details"
+                ]
+            },
+            "Name": {
+                "type": "string",
+                "description": "The name of the insertion order. Often contains details about the campaign phase, ad format, or targeting which can be parsed for analysis.",
+                "dv360_definition": "The name of the entry.",
+                "sample_data": [
+                    "PPE Regulation - Awareness - RTB Display#ANSL_NONE____________pperegul_PAD",
+                    "PPE Regulation - Consideration - Youtube Bumper#ANSL_NONE____________pperegul_PAV",
+                    "PPE Regulation - Awareness - Youtube Preroll#ANSL_NONE____________pperegul_PAV"
+                ]
+            },
+            "Status": {
+                "type": "string",
+                "description": "The current status of the insertion order (e.g., Active, Paused, Draft). This is useful for filtering out inactive IOs from analysis.",
+                "dv360_definition": "The status setting for the entry.Active\nPaused\nDraft\nArchived",
+                "sample_data": [
+                    "Paused",
+                    "Active",
+                    "Draft"
+                ]
+            },
+            "Io Type": {
+                "type": "string",
+                "description": "The type of insertion order. Currently only 'Standard' is supported. This field is only settable on creation.",
+                "dv360_definition": "The type of the insertion order. Only settable on creation.standard",
+                "sample_data": [
+                    "Standard"
+                ]
+            },
+            "Io Subtype": {
+                "type": "string",
+                "description": "The subtype of the insertion order to distinguish between different formats: 'Default' or 'Regular Over The Top' (OTT).",
+                "dv360_definition": "Field required for Insertion Orders to distinguish between different formats. If the field is left empty 'default' value will be used'Default\nRegular Over The Top",
+                "sample_data": [
+                    "Default",
+                    "Over The Top"
+                ]
+            },
+            "Io Objective": {
+                "type": "string",
+                "description": "The objective of the insertion order: Brand Awareness, Click, Conversion, Custom, or No Objective. Helps categorize campaigns by goal.",
+                "dv360_definition": "The objective of the Insertion Order.\n\nThis field is in beta and currently only available to participating clients. This column will always be empty for customers not participating in the beta.Brand Awareness\nClick\nConversion\nCustom\nNo Objective",
+                "sample_data": [
+                    "No Objective",
+                    "Click",
+                    "Conversion"
+                ]
+            },
+            "Fees": {
+                "type": "string, list of lists",
+                "description": "A list of all fees associated with the insertion order. CPM fees are in euros, Media fees are percentages. After transformation, parsed into structured data for analysis.",
+                "dv360_definition": "All fees for this entry. List format = (Fee category; Fee amount; Fee type; Invoiced;).Fee categoryCPM\nMedia\n\nFee amountFloat\nPct as float\n\nFee type(string, see table in fees)\n\nInvoicedTrue\nFalse\nblank\n\nExample '(CPM; 2; Display & Video 360 Fee; False) ; (Media; 13; Default; True);'\nAcceptable values are provided in the following table:\nFee categoryFee TypeInvoiced optionCPM/Media Default Not permitted (leave blank) CPM/Media Third-Party Ad Server Not permitted (leave blank) CPM/Media DoubleVerify Permitted (True/False) CPM/Media Adsafe Not permitted (leave blank) CPM/Media Adxpose Not permitted (leave blank) CPM/Media Vizu Not permitted (leave blank) CPM/Media Aggregate Knowledge Not permitted (leave blank) CPM/Media Teracent Not permitted (leave blank) CPM/Media Evidon Not permitted (leave blank) CPM/Media Agency Trading Desk Fee Not permitted (leave blank) CPM/Media Adloox Permitted (True/False) CPM ShopLocal Required (True) CPM TrustMetrics Not permitted (leave blank) CPM Integral Ad Science Video Permitted (True/False) CPM MOAT Video Not permitted (leave blank) Media Display & Video 360 Fee Required (True) Media Media Cost Data Not permitted (leave blank) Media Scibids Fee Required (True) \n\nNote: Adloox was a previous name for the provider now known as Scope3.",
+                "sample_data": [
+                    "(Media; 11.2; Display & Video 360 Fee; True) ; (Media; 3.3; Default; False;)",
+                    "(Media; 0; Display & Video 360 Fee; True) ; (Media; 50.55; Default; False;)",
+                    "(Media; 0; Display & Video 360 Fee; True) ; (Media; 150; Default; False;) ; (Media; 150; Default; False;) ; (Media; 90.16; Default; False;)"
+                ]
+            },
+            "Integration Code": {
+                "type": "string",
+                "description": "An optional tracking code for integration with external systems or for custom tracking purposes.",
+                "dv360_definition": "An optional code for tracking purposes.",
+                "sample_data": []
+            },
+            "Pacing": {
+                "type": "string",
+                "description": "The period over which the IO's budget is spent: 'Daily', 'Monthly', or 'Flight'. Critical for budget and pacing analysis.",
+                "dv360_definition": "The time period used to spend to the pacing amount.Daily\nMonthly\nFlight",
+                "sample_data": [
+                    "Flight",
+                    "Daily"
+                ]
+            },
+            "Pacing Rate": {
+                "type": "string",
+                "description": "The rate at which the budget is spent. 'ASAP' spends budget quickly, 'Even' distributes evenly, 'Ahead' front-loads spending. Note: 'ASAP' is not compatible with 'Flight' pacing.",
+                "dv360_definition": "The rate of pacing for this entry.ASAP\nEven\nAhead\n\n'ASAP' is not compatible with 'Flight' pacing.",
+                "sample_data": [
+                    "Ahead",
+                    "Even",
+                    "ASAP"
+                ]
+            },
+            "Pacing Amount": {
+                "type": "float",
+                "description": "The amount to be spent per the period defined by the 'Pacing' setting. A key field for budget and pacing analysis.",
+                "dv360_definition": "The amount to spend per the time period set by the pacing type.",
+                "sample_data": [
+                    "0.0",
+                    "85.0",
+                    "891.54"
+                ]
+            },
+            "Frequency Enabled": {
+                "type": "string",
+                "description": "Indicates if frequency capping is enabled at the IO level. When analyzing frequency caps, check this along with 'Frequency Exposures', 'Frequency Amount', and 'Frequency Period'.",
+                "dv360_definition": "Enables/disables impression-based frequency capping on the insertion order.TRUE\nFALSE",
+                "sample_data": [
+                    "True",
+                    "False"
+                ]
+            },
+            "Frequency Exposures": {
+                "type": "integer",
+                "description": "The number of impressions allowed per user within the defined frequency cap period.",
+                "dv360_definition": "A positive integer amount for the number of impressions in a given Frequency Amount, that is, the x in 'Show x impressions over y period'.",
+                "sample_data": [
+                    "2",
+                    "6",
+                    "3"
+                ]
+            },
+            "Frequency Period": {
+                "type": "string",
+                "description": "The time unit for the frequency cap (Minutes, Hours, Days, Weeks, or Months).",
+                "dv360_definition": "Specifies the time period unit for the frequency cap.Minutes\nHours\nDays\nWeeks\nMonths",
+                "sample_data": [
+                    "Months",
+                    "Minutes",
+                    "Days"
+                ]
+            },
+            "Frequency Amount": {
+                "type": "integer",
+                "description": "The duration of the frequency cap period. Typically 6 exposures per month for Display, 3 exposures per month for Video/Audio/YouTube. Frequency cap periods must be 30 days or less.",
+                "dv360_definition": "A positive integer amount for length of time of the Frequency Period type, that is, the y in 'Show x impressions over y period'.\n\nFrequency cap time periods must be 30 days or less.",
+                "sample_data": [
+                    "1",
+                    "0",
+                    "2"
+                ]
+            },
+            "Kpi Type": {
+                "type": "string",
+                "description": "The KPI unit being measured for this insertion order (e.g., CPM, CPA, CPC, CPV, CTR, % Viewability). Lists KPIs related to the objectives.",
+                "dv360_definition": "The KPI unit for the insertion orderCPM\nCPA\nCPC\nCPV\nCPIAVC\nCTR\n% Viewability\nCPE\nClick CVR\nImpression CVR\nVCPM\nVTR\nAudio CR\nVideo CR\nCPCL\nCPCV\nTOS10\nMaximize Pacing\nCustom impression value / cost\nNone\nOther",
+                "sample_data": [
+                    "CTR",
+                    "CPV",
+                    "% Viewability"
+                ]
+            },
+            "Kpi Value": {
+                "type": "string",
+                "description": "The target value for the KPI. For example, if KPI Type is 'CPA', this might be '30' (representing \u20ac30). Can be currency, percentage, or unitless depending on KPI Type.",
+                "dv360_definition": "The KPI value in currency (CPM, CPA, CPC, CPV, CPIAVC, CPE, VCPM), percentage (% Viewability, CTR, Click CVR, Impression CVR, VTR, Audio CR, Video CR, CPCL, CPCA, TOS10), unitless (Custom impression value / cost), or as a string (Other). If the provided KPI type is 'Maximize Pacing' or 'None' then this column is ignored.",
+                "sample_data": [
+                    "0.11",
+                    "0.04",
+                    "95.0"
+                ]
+            },
+            "Budget Type": {
+                "type": "string",
+                "description": "Defines how the IO's budget is measured: 'Amount' (currency-based) or 'Impressions' (volume-based). Key component for budget analysis.",
+                "dv360_definition": "Specifies the type of budget in terms of an amount of \"revenue\" to spend (amount) or a number of impressions (impressions) to purchase.Amount\nImpressions",
+                "sample_data": [
+                    "Amount",
+                    "Impressions"
+                ]
+            },
+            "Budget Segments": {
+                "type": "string, list of lists",
+                "description": "Detailed breakdown of budget allocation by time period. Each segment includes budget amount, start date, end date, and optional description. Useful for analyzing budget pacing over time.",
+                "dv360_definition": "Specifies the specific budget segments. List format = (Budget, Start Date, End Date, Campaign Budget ID, Description). Budget is in currency floating format. Dates are in MM/DD/YYYY format. Campaign Budget ID is empty if not specified. Description cannot be empty for any budget segments. If an existing budget segment has an empty description, a description will need to be provided for the row to be uploaded. Example: \"(100.50;01/01/2016;03/31/2016;12345;budget segment 1;);(200.00;04/01/2016;06/30/2016;;updated budget segment 1;);\"",
+                "sample_data": [
+                    "(0.01; 04/18/2019; 04/19/2019; ; ;); (1412.49; 04/23/2019; 04/30/2019; ; ;); (1412.5; 05/01/2019; 05/06/2019; ; ;);",
+                    "(4000.0; 05/06/2019; 05/20/2019; ; ;); (2000.0; 05/22/2019; 05/31/2019; ; ;); (2000.0; 06/01/2019; 06/07/2019; ; ;);",
+                    "(1412.5; 04/23/2019; 04/30/2019; ; ;); (1412.5; 05/01/2019; 05/06/2019; ; ;);"
+                ]
+            },
+            "Total Budget Segment": {
+                "type": "string, list of lists",
+                "description": "A summary combining all budget segments, showing the total amount and the full period from the earliest start date to the latest end date. Provides a quick overview of total IO budget and flight dates.",
+                "dv360_definition": "The Total Budget Segment represents the aggregated budget information across all individual budget segments. It includes:\nTotal Amount: The sum of all segment budgets.\nTotal Period: The full time span covered by the segments, starting from the earliest segment start date to the latest segment end date.example :  \"Budget Segments\": \"(109.08; 03/01/2025; 03/31/2025; ; ;); (115.12; 04/01/2025; 04/30/2025; ; ;); (160.0; 05/01/2025; 05/31/2025; ; ;); (160.0; 06/01/2025; 06/30/2025; ; ;); (150.95; 07/01/2025; 07/31/2025; ; ;);\",\n  \"Total Budget Segment\": \"695.15; 03/01/2025; 07/31/2025\",",
+                "sample_data": [
+                    "2825; 04/18/2019; 05/06/2019",
+                    "8000; 05/06/2019; 06/07/2019",
+                    "2825; 04/23/2019; 05/06/2019"
+                ]
+            },
+            "Auto Budget Allocation": {
+                "type": "string",
+                "description": "Indicates whether automatic budget allocation is enabled, allowing DV360 to distribute budget across line items automatically.",
+                "dv360_definition": "Enables/disables auto-budget allocationTRUE\nFALSE",
+                "sample_data": [
+                    "False",
+                    "True"
+                ]
+            },
+            "Geography Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of countries and regions to include in geographic targeting. After transformation, location IDs are converted to human-readable names.",
+                "dv360_definition": "List of geographies to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_GEO_REGION.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Germany",
+                    "France",
+                    "Belgium"
+                ]
+            },
+            "Geography Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of countries and regions to exclude from geographic targeting. After transformation, location IDs are converted to human-readable names.",
+                "dv360_definition": "List of geographies to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_GEO_REGION.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Austria; France; India; Italy; Spain; Turkiye; United Kingdom",
+                    "Austria; France; India; Spain; Turkiye; United Kingdom",
+                    "Austria; Belgium; India; Italy; Spain; Turkiye; United Kingdom"
+                ]
+            },
+            "Language Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of languages to include in targeting, determining which language speakers will see the advertisements. After transformation, language codes are converted to names.",
+                "dv360_definition": "List of languages to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_LANGUAGE.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "French",
+                    "Dutch",
+                    "English;Dutch"
+                ]
+            },
+            "Language Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of languages to exclude from targeting. After transformation, language codes are converted to names.",
+                "dv360_definition": "List of languages to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_LANGUAGE.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Device Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of device types to include in targeting (e.g., Computer, Smart_phone, Tablet, Connected_tv). After transformation, device codes are converted to human-readable names.",
+                "dv360_definition": "List of devices to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for the following targeting types:\nTARGETING_TYPE_DEVICE_TYPE\nTARGETING_TYPE_DEVICE_MAKE_MODEL\nTARGETING_TYPE_OPERATING_SYSTEM\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "(DEVICE_TYPE_COMPUTER; DEVICE_TYPE_SMART_PHONE; DEVICE_TYPE_TABLET; DEVICE_TYPE_CONNECTED_TV; DEVICE_TYPE_CONNECTED_DEVICE;)",
+                    "(DEVICE_TYPE_COMPUTER; DEVICE_TYPE_SMART_PHONE; DEVICE_TYPE_TABLET;)",
+                    "(DEVICE_TYPE_CONNECTED_TV;)"
+                ]
+            },
+            "Device Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of device types to exclude from targeting. After transformation, device codes are converted to human-readable names.",
+                "dv360_definition": "List of devices to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for the following targeting types:\nTARGETING_TYPE_DEVICE_TYPE\nTARGETING_TYPE_DEVICE_MAKE_MODEL\nTARGETING_TYPE_OPERATING_SYSTEM\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "(DEVICE_TYPE_CONNECTED_TV; DEVICE_TYPE_CONNECTED_DEVICE;)",
+                    "(DEVICE_TYPE_COMPUTER; DEVICE_TYPE_SMART_PHONE; DEVICE_TYPE_TABLET;)",
+                    "(DEVICE_TYPE_CONNECTED_TV;)"
+                ]
+            },
+            "Digital Content Labels - Exclude": {
+                "type": "string, list",
+                "description": "Digital content labels to exclude from targeting for brand safety. Common practice is to exclude all except 'G' rated content.",
+                "dv360_definition": "List of the digital content labels to exclude. List format = (G;PG; etc.).G\nPG\nT\nMA\n?",
+                "sample_data": [
+                    "MA; Not yet labeled;",
+                    "PG; T; MA; Not yet labeled;",
+                    "PG; MA; Not yet labeled;"
+                ]
+            },
+            "Brand Safety Sensitivity Setting": {
+                "type": "string",
+                "description": "The brand safety sensitivity level: 'Do not block', 'Use Campaign Manager 360 Verification', or 'Use custom' settings.",
+                "dv360_definition": "Choose the sensitivity setting to block inventory based on the subject matter of its surrounding content.Do not block\nUse Campaign Manager 360 Verification\nUse custom",
+                "sample_data": [
+                    "Use custom",
+                    "Do not block"
+                ]
+            },
+            "Brand Safety Custom Settings": {
+                "type": "string, list",
+                "description": "A list of specific content categories to exclude for brand safety when 'Use custom' sensitivity is selected. Commonly all sensitive categories are excluded.",
+                "dv360_definition": "If the Brand Safety Sensitivity Setting is 'Use custom', specify the list of standard content classifiers. For example, (Sexual;Alcohol;Tobacco;etc.).Sexual\nDerogatory\nDownloads & Sharing\nWeapons\nGambling\nViolence\nSuggestive\nProfanity\nAlcohol\nDrugs\nTobacco\nPolitics\nReligion\nTragedy\nTransportation Accidents\nSensitive social issues\nShocking",
+                "sample_data": [
+                    "Alcohol; Derogatory; Downloads & Sharing; Drugs; Gambling; Politics; Profanity; Religion; Sensitive social issues; Sexual; Suggestive; Tobacco; Tragedy; Transportation Accidents; Violence; Weapons;",
+                    "Alcohol; Derogatory; Downloads & Sharing; Drugs; Gambling; Politics; Profanity; Religion; Sensitive social issues; Sexual; Shocking; Suggestive; Tobacco; Tragedy; Transportation Accidents; Violence; Weapons;",
+                    "Sensitive social issues; Tragedy;"
+                ]
+            },
+            "Third Party Verification Services": {
+                "type": "string",
+                "description": "The third-party verification provider used for brand safety and viewability measurement (e.g., Integral Ad Science, DoubleVerify, Adloox/Scope3).",
+                "dv360_definition": "Third party verification services provider.None\nIntegral Ad Science\nDoubleVerify\nAdloox\nNote: Adloox was a previous name for the provider now known as Scope3.",
+                "sample_data": [
+                    "DoubleVerify"
+                ]
+            },
+            "Third Party Verification Labels": {
+                "type": "string, list",
+                "description": "Specific labels or categories provided by the selected third-party verification service.",
+                "dv360_definition": "If Third Party Verification Services is not \"None\", specify a list of labels supported by the selected provider.",
+                "sample_data": [
+                    "51004731; AVERAGE_VIEW_DURATION_15_SEC; IAB_VIEWED_RATE_70_PERCENT_HIGHER;"
+                ]
+            },
+            "Channel Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of channel names (whitelists) to include in targeting at the IO level.",
+                "dv360_definition": "List of channels to include in targeting.\nThis column uses Display & Video 360 API Channel resource IDs.\nList format = (Channel.channelId; Channel.channelId; etc.).",
+                "sample_data": [
+                    "6495234217.0"
+                ]
+            },
+            "Channel Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of channel names (blacklists) to exclude from targeting. Common exclusions include: Blacklist, Good Games Performer, Dictionaries, Weather/meteo, Jeux Online, Low Viewability <55%, Low CTR <0.04%, Non-Reportable Sites and Apps.",
+                "dv360_definition": "List of channels to exclude in targeting.\nThis column uses Display & Video 360 API Channel resource IDs.\nList format = (Channel.channelId; Channel.channelId; etc.).",
+                "sample_data": [
+                    "Blacklist; Good Games Performer; Dictionaries; Weather/meteo; Jeux Online; Low Viewability  <55%; Low CTR <0.04%",
+                    "Blacklist; Good Games Performer; Dictionaries; Weather/meteo; Jeux Online; Low Viewability  <55%; Low CTR <0.04%; Non-Reportable Sites and Apps",
+                    "Blacklist; Dictionaries; Jeux Online; Low Viewability  <55%; Low CTR <0.04%"
+                ]
+            },
+            "Site Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of specific website URLs to include in targeting at the IO level.",
+                "dv360_definition": "List of sites to include in targeting. The list is strings of URLs.\nList format = (someurl.com; someurltwo.com; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": []
+            },
+            "Site Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of specific website URLs to exclude from targeting at the IO level.",
+                "dv360_definition": "List of sites to exclude in targeting. The list is strings of URLs.\nList format = (someurl.com; someurltwo.com; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": []
+            },
+            "App Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of specific mobile apps to include in targeting. After transformation, app IDs are converted to readable app identifiers with platform prefixes.",
+                "dv360_definition": "List of apps to include in targeting. The list is concatenated strings of app platform and app platform ID.\nThe following values are used to define the app platform:\nAPP (This encompasses both Android Play store and Apple App store platforms)\nROKU_APP\nAMAZON_FIRETV_APP\nXBOX_APP\nPLAYSTATION_APP\nAPPLE_TV_APP\nSAMSUNG_TV_APP\nANDROID_TV_APP\nGENERIC_CTV_APP\nLG_TV_APP\nVIZIO_TV_APP\nThe ID is provided by the relevant platform, such as a bundle ID from Android's Play store (example: com.google.android.gm) or a App ID from Apple's App store (example: 422689480).The concatenated string of app platform and ID is separated by a colon, for example: APP:com.google.android.gm.\nList format = (APP:com.google.android.gm; APP:422689480; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": []
+            },
+            "App Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of specific mobile apps to exclude from targeting. After transformation, app IDs are converted to readable app identifiers with platform prefixes.",
+                "dv360_definition": "List of apps to exclude in targeting. The list is concatenated strings of app platform and app platform ID.\nThe following values are used to define the app platform:\nAPP (This encompasses both Android Play store and Apple App store platforms)\nROKU_APP\nAMAZON_FIRETV_APP\nXBOX_APP\nPLAYSTATION_APP\nAPPLE_TV_APP\nSAMSUNG_TV_APP\nANDROID_TV_APP\nGENERIC_CTV_APP\nLG_TV_APP\nVIZIO_TV_APP\nThe ID is provided by the relevant platform, such as a bundle ID from Android's Play store (example: com.google.android.gm) or a App ID from Apple's App store (example: 422689480).The concatenated string of app platform and ID is separated by a colon, for example: APP:com.google.android.gm.\nList format = (APP:com.google.android.gm; APP:422689480; etc.). This list is generated in ascending alphabetical order.",
+                "sample_data": []
+            },
+            "Category Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of content categories to include in targeting. After transformation, category IDs are converted to human-readable names.",
+                "dv360_definition": "List of categories to include in targeting. This column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CATEGORY.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Category Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of content categories to exclude from targeting. After transformation, category IDs are converted to human-readable names.",
+                "dv360_definition": "List of categories to exclude in targeting. This column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CATEGORY.List format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Keyword Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of keywords to target. Ads will show on pages containing these keywords.",
+                "dv360_definition": "List of keyword strings to include in targeting.\nThis list is generated in ascending alphabetical order.",
+                "sample_data": []
+            },
+            "Keyword Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of keywords to exclude. Ads will not show on pages containing these keywords.",
+                "dv360_definition": "List of keyword strings to exclude in targeting.\nThis list is generated in ascending alphabetical order.",
+                "sample_data": []
+            },
+            "Keyword List Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of negative keyword list names to exclude from targeting (e.g., 'NL negative keywords list', 'FR negative keywords list').",
+                "dv360_definition": "List of negative keyword lists to exclude in targeting.\nThis column uses Display & Video 360 API NegativeKeywordList resource IDs.\nList format = (NegativeKeywordList.negativeKeywordListId; NegativeKeywordList.negativeKeywordListId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "NL negative keyword list; FR negative keyword list",
+                    "FR negative keywords list; NL negative keywords list",
+                    "Proximus Negative Keywods"
+                ]
+            },
+            "Audience Targeting - Include": {
+                "type": "string, list of list of pairs",
+                "description": "A list of audience names to include in targeting. After transformation, audience IDs are converted to readable names with recency settings.",
+                "dv360_definition": "List of audience lists to include in targeting.\nThis column uses Display & Video 360 API FirstPartyAndPartnerAudience resource IDs.\nFor first-party audience lists, each audience is listed as a pair of FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId and recency setting. A pair is (1;1d;), where 1d is a sample recency representing 1 day recency. Recency is not available for third-party audiences, so the list format is (3;);(4;);. To \"AND\" and \"OR\" groups of audiences, follow this example: To combine pairs with and without recency: '((1;1d;);(2;365d;));((3;);(4;5m;);(5;all;));'. This means (list 1 with 1 day recency OR list 2 with 365day recency ) AND (list 3 without a specified recency OR list 4 with 5 minute recency OR list 5 with all users).\nValid recency values are:\nall\n1m\n5m\n10m\n15m\n30m\n1h\n2h\n3h\n6h\n12h\n1d\n2d\n3d\n5d\n7d\n10d\n14d\n15d\n21d\n28d\n30d\n45d\n60d\n90d\n120d\n180d\n270d\n365d",
+                "sample_data": []
+            },
+            "Audience Targeting - Exclude": {
+                "type": "string, list of list of pairs",
+                "description": "A list of audience names to exclude from targeting. After transformation, audience IDs are converted to readable names with recency settings.",
+                "dv360_definition": "List of audience lists to exclude in targeting.\nThis column uses Display & Video 360 API FirstPartyAndPartnerAudience resource IDs.\nEach audience is listed as a pair of FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId and recency setting, if the audience list is a 1P audience list. A pair is (1;1d;), where 1d is a sample recency representing 1 day recency. However, for 3P audiences, recency is not available, so the list format is (3;);(4;);.\nList format = ((FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId; recency optional;); (FirstPartyAndPartnerAudience.firstPartyAndPartnerAudienceId; recency optional;);)\nExample: \"(1;1d;);(2;);\".\nValid recency values are:\nall\n1m\n5m\n10m\n15m\n30m\n1h\n2h\n3h\n6h\n12h\n1d\n2d\n3d\n5d\n7d\n10d\n14d\n15d\n21d\n28d\n30d\n45d\n60d\n90d\n120d\n180d\n270d\n365d",
+                "sample_data": []
+            },
+            "Affinity & In Market Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of Google affinity and in-market audience segments to include in targeting.",
+                "dv360_definition": "List of affinity and/or in-market audience lists to include.\nAudience list IDs can be retrieved from the Display & Video 360 interface.\nList format = (Audience ID; Audience ID; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Affinity & In Market Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of Google affinity and in-market audience segments to exclude from targeting.",
+                "dv360_definition": "List of affinity and/or in-market audience lists to exclude.\nAudience list IDs can be retrieved from the Display & Video 360 interface.\nList format = (Audience ID; Audience ID; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Custom List Targeting": {
+                "type": "string, list",
+                "description": "A list of custom audience lists to target. After transformation, custom list IDs are converted to names.",
+                "dv360_definition": "List of custom lists to target.\nThis column uses Display & Video 360 API CustomList resource IDs.\nList format = (CustomList.customListId; CustomList.customListId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Inventory Source Targeting - Authorized Seller Options": {
+                "type": "string",
+                "description": "Defines which types of sellers to target: 'Authorized Direct Sellers' (only direct), 'Authorized Direct Sellers And Resellers' (direct + resellers), or 'Authorized and Non-Participating Publisher' (all including unknown).",
+                "dv360_definition": "Setting to target authorized direct sellers, authorized direct seller and resellers, or authorized seller + unknown. \"Authorized Direct\" means only authorized sellers will be targeted. \"Authorized Direct Sellers And Resellers\" means targeting the authorized sellers and resellers. \"Authorized and Non-Participating Publisher\" means it will target authorized sellers, resellers, and unknown sellers.Authorized Direct Sellers\nAuthorized Direct Sellers And Resellers\nAuthorized and Non-Participating Publisher",
+                "sample_data": [
+                    "Authorized and Non-Participating Publisher",
+                    "Authorized Direct Sellers And Resellers",
+                    "Authorized Direct Sellers"
+                ]
+            },
+            "Inventory Source Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of inventory sources and exchanges to include (e.g., Google Ad Manager, Magnite DV+, OpenX, Xandr). After transformation, exchange IDs are converted to names.",
+                "dv360_definition": "List of inventory sources, exchanges, and sub-exchanges to include in targeting.\nThis column uses Display & Video 360 API InventorySource resource IDs, published exchange IDs, and Display & Video 360 API TargetingOption resource IDs of targeting type TARGETING_TYPE_SUB_EXCHANGE.\nList format = (InventorySource.inventorySourceId; exchangeId; TargetingOption.targetingOptionId; etc.)",
+                "sample_data": [
+                    "Google Ad Manager; Magnite DV+; OpenX; Xandr - Monetize SSP (AppNexus); Improve Digital; SpotX; BidSwitch; Magnite CTV; FreeWheel SSP; TeadsTv; Equativ; DT Fairbid; Waze; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn",
+                    "Google Ad Manager; Magnite DV+; Xandr - Monetize SSP (AppNexus); Improve Digital; Equativ; DT Fairbid; Waze; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn",
+                    "Google Ad Manager; Magnite DV+; OpenX; Xandr - Monetize SSP (AppNexus); Improve Digital; TeadsTv; Waze"
+                ]
+            },
+            "Inventory Source Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of inventory sources and exchanges to exclude from targeting. After transformation, exchange IDs are converted to names.",
+                "dv360_definition": "List of inventory sources, exchanges, and sub-exchanges to exclude in targeting.\nThis column uses Display & Video 360 API InventorySource resource IDs, published exchange IDs, and Display & Video 360 API TargetingOption resource IDs of targeting type TARGETING_TYPE_SUB_EXCHANGE.\nList format = (InventorySource.inventorySourceId; exchangeId; TargetingOption.targetingOptionId; etc.)",
+                "sample_data": [
+                    "OpenX; SpotX; YieldOne; BidSwitch; Magnite CTV; FreeWheel SSP; TeadsTv; AdsWizz; GumGum; Triton; Taboola",
+                    "SpotX; YieldOne; BidSwitch; Magnite CTV; FreeWheel SSP; Equativ; DT Fairbid; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn; 123",
+                    "OpenX; SpotX; YieldOne; BidSwitch; Magnite CTV; FreeWheel SSP; Equativ; DT Fairbid; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn; 123"
+                ]
+            },
+            "Inventory Source Targeting - Target New Exchanges": {
+                "type": "string",
+                "description": "Indicates whether to automatically include newly added exchanges as they become available.",
+                "dv360_definition": "Setting to target new exchanges.True\nFalse",
+                "sample_data": [
+                    "True",
+                    "False"
+                ]
+            },
+            "Daypart Targeting": {
+                "type": "string, list",
+                "description": "Specifies which days and times the IO should run. Uses encoded IDs representing specific time slots. Useful for targeting specific time windows.",
+                "dv360_definition": "List of IDs, where each daypart ID is constructed in the following format:\ndaypart_id = base_dayparting_id\n+ days_since_monday * 10000\n+ start * 100\n+ end\n\nbase_dayparting_id = 300000\ndays_since_monday: 0=Monday, 1=Tuesday, ..., 6=Sunday\nstart: 0..95 (00:00--23:45) an integer from 0-95, representing 15min slots\nend: 1..96 (00:15--24:00); an integer from 0-95, representing 15min slots\nstart < end\nFor new entities, times will be set in the timezone of your users(i.e., \"Local\"). For existing entities, the timezone will not be changed.\nThis list is generated in ascending numerical order.",
+                "sample_data": [
+                    "302492; 312492; 322492; 332492; 342492; 352492; 362492;",
+                    "340096; 350096; 360056;"
+                ]
+            },
+            "Daypart Targeting Time Zone": {
+                "type": "string",
+                "description": "The timezone used for daypart targeting: 'Local' (user's timezone) or 'Advertiser' (advertiser's timezone).",
+                "dv360_definition": "Timezone to use for daypart targeting.Local\nAdvertiser",
+                "sample_data": [
+                    "Local",
+                    "Advertiser"
+                ]
+            },
+            "Environment Targeting": {
+                "type": "string, list",
+                "description": "Specifies where ads can appear: 'Web' (desktop/mobile web), 'Web Not Optimized' (non-mobile-optimized sites), or 'App' (mobile apps).",
+                "dv360_definition": "List of environments to target. Select one or more of the acceptable values. Please note that 'Web Not Optimized' cannot be selected without selecting 'Web'.Web\nWeb Not Optimized\nApp",
+                "sample_data": [
+                    "Web;",
+                    "Web; App;",
+                    "App;"
+                ]
+            },
+            "Viewability Targeting Active View": {
+                "type": "string",
+                "description": "The minimum predicted viewability percentage to target (e.g., 0.7 = 70%). Higher values improve viewability but may reduce scale.",
+                "dv360_definition": "Target predicted viewability percentages. Percentages are represented as floats. One of {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9}",
+                "sample_data": [
+                    "0.7",
+                    "0.8",
+                    "0.5"
+                ]
+            },
+            "Demographic Targeting Gender": {
+                "type": "string, list",
+                "description": "Targets specific genders: Male, Female, or Unknown. Used for demographic-based campaign optimization.",
+                "dv360_definition": "List of genders to target. Select one or more of the acceptable values:Female\nMale\nUnknown",
+                "sample_data": []
+            },
+            "Demographic Targeting Age": {
+                "type": "string, list",
+                "description": "Targets specific age ranges (e.g., 18-25, 45+). Important for demographic segmentation in analysis.",
+                "dv360_definition": "Target to a user age range. Specify a from/to range by selecting a single From age and a single To age and whether to include unknown ages true/false. See the list of acceptable From/To ages.\nExample 1: to target 18-55 and include unknown ages, specify the format {From; To ; Include unknown True/False} = 18;55;true;\nExample 2: to target only users >35 years old and exclude unknown ages, specify the following = 35;+;false;.\nAcceptable values for From:18\n25\n35\n45\n55\n65\n\nAcceptable values for To:25\n35\n45\n55\n65\n+",
+                "sample_data": [
+                    "45; +; False;"
+                ]
+            },
+            "Demographic Targeting Household Income": {
+                "type": "string, list",
+                "description": "Targets households based on income percentile (Top 10%, 11-20%, etc.). Useful for premium product campaigns.",
+                "dv360_definition": "Target a household income range. Specify a from/to range by selecting a single Top_of_Range income range and a single Bottom_of_Range income range and whether to include households with unknown income true/false. See the list of acceptable Top_of_Range/Bottom_of_Range ranges.\nExample 1: to target the top 10% to 50% of households and include households with unknown income, specify the format {Top_of_Range; Bottom_of_Range; Include unknown True/False} = Top 10%;41-50%;true;\nExample 2: to target only the lower 50% of households and exclude households with unknown income, specify the format {Top_of_Range; Bottom_of_Range; Include unknown True/False} = Lower 50%;Lower 50%;true;\nAcceptable values for Top_of_Range/Bottom_of_Range:Top 10%\n11-20%\n21-30%\n31-40%\n41-50%\nLower 50%",
+                "sample_data": []
+            },
+            "Demographic Targeting Parental Status": {
+                "type": "string, list",
+                "description": "Targets based on parental status: Parent, Not a parent, or Unknown. Useful for family-oriented products.",
+                "dv360_definition": "List of parental status to target. Select one or more of the acceptable values.Parent\nNot a parent\nUnknown",
+                "sample_data": [
+                    "Unknown;"
+                ]
+            },
+            "Carrier Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of ISPs or mobile carriers to include in targeting. After transformation, carrier IDs are converted to names.",
+                "dv360_definition": "List of ISPs or Carriers to target.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CARRIER_AND_ISP.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Carrier Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of ISPs or mobile carriers to exclude from targeting. After transformation, carrier IDs are converted to names.",
+                "dv360_definition": "List of ISPs or Carriers to exclude.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_CARRIER_AND_ISP.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Insertion Order Optimization": {
+                "type": "string",
+                "description": "Indicates whether insertion order-level optimization is enabled, allowing DV360 to optimize performance across all line items within the IO.",
+                "dv360_definition": "Enables/disables insertion order optimizationTRUE\nFALSE",
+                "sample_data": [
+                    "False",
+                    "True"
+                ]
+            },
+            "Bid Strategy Unit": {
+                "type": "string",
+                "description": "The unit for the bid strategy optimization: CPA, CPC, custom impression value/cost, CIVA, IVO_TEN, or AV_VIEWED.",
+                "dv360_definition": "Select bid strategy unit to optimize bidding:CPA\nCPC\ncustom impr. value/cost\nCIVA\nIVO_TEN\nAV_VIEWED",
+                "sample_data": [
+                    "CPA",
+                    "CPC",
+                    "AV_VIEWED"
+                ]
+            },
+            "Bid Strategy Do Not Exceed": {
+                "type": "float",
+                "description": "A maximum CPM value that the bid strategy should not exceed. A value of 0 means this limit is not enabled.",
+                "dv360_definition": "Set a 'do not exceed' CPM value. If 0, 'do not exceed' is not enabled.",
+                "sample_data": [
+                    "10.0",
+                    "8.0",
+                    "12.0"
+                ]
+            }
+        },
+        "metadata_fields_Campaigns": {
+            "Campaign Id": {
+                "type": "integer",
+                "description": "The unique identifier for the campaign. This ID is crucial for linking insertion orders and line items to their parent campaign.",
+                "dv360_definition": "Numeric ID value of the campaign. If left blank, a new Campaign ID will be created and a unique ID will be assigned. Optionally, when creating a new Campaign, you can use a custom identifier for the purpose of assigning Insertion Orders to the new Campaign. The format for a custom identifier is \"ext[custom identifier]\", for example, ext123. When the file is uploaded and processed, all custom identifiers will be replaced with DBM-assigned IDs and the objects will be associated (for example, Insertion Order to Campaign) based on the custom identifiers.",
+                "sample_data": [
+                    "2812665",
+                    "53716239",
+                    "55155704"
+                ]
+            },
+            "Partner ID": {
+                "type": "integer",
+                "description": "The unique identifier for the partner account. This field is used to filter data for a specific partner.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "373"
+                ]
+            },
+            "Advertiser ID": {
+                "type": "integer",
+                "description": "The unique identifier for the advertiser. Links campaigns to specific advertisers for analysis.",
+                "dv360_definition": "Numeric ID value of the advertiser. It must be a valid existing advertiser ID",
+                "sample_data": [
+                    "3573235",
+                    "1420623980",
+                    "742781690"
+                ]
+            },
+            "Advertiser Id": {
+                "type": "integer",
+                "description": "The unique identifier for the advertiser. Links campaigns to specific advertisers for analysis.",
+                "dv360_definition": "Numeric ID value of the advertiser. It must be a valid existing advertiser ID",
+                "sample_data": [
+                    "3573235",
+                    "1420623980",
+                    "742781690"
+                ]
+            },
+            "Advertiser Name": {
+                "type": "string",
+                "description": "The name of the advertiser. Useful for quickly identifying the advertiser in reports without needing to join with other tables.",
+                "dv360_definition": "No DV360 definition available.",
+                "sample_data": [
+                    "DCM - Ansell",
+                    "DCM - Bemini",
+                    "DCM - Yuzzu"
+                ]
+            },
+            "Name": {
+                "type": "string",
+                "description": "The name of the campaign. This provides a human-readable identifier for the campaign used in reporting and analysis.",
+                "dv360_definition": "The name of the entry.",
+                "sample_data": [
+                    "Ansell - PPE Regulation",
+                    "Back To School",
+                    "2025 - CONVERSION (All Products)"
+                ]
+            },
+            "dv360_link": {
+                "type": "string",
+                "description": "A direct URL to the campaign in the DV360 interface. This allows for quick access and verification of the campaign's settings.",
+                "dv360_definition": "Direct URL link to open the entity in DV360 interface for easy navigation.",
+                "sample_data": [
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/3573235/c/2812665/details",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/1420623980/c/53716239/details",
+                    "https://displayvideo.google.com/ng_nav/p/686573/a/742781690/c/55155704/details"
+                ]
+            },
+            "Timestamp": {
+                "type": "integer",
+                "description": "The last modified timestamp for the campaign. Used for versioning and tracking when changes were made to the configuration.",
+                "dv360_definition": "The timestamp for the entry, this is used by the system to verify that the entry has not changed between downloading and uploading.",
+                "sample_data": [
+                    "2020-04-13T22:02:17.621000",
+                    "2023-09-01T11:07:20.918000",
+                    "2025-04-22T05:35:17.416000"
+                ]
+            },
+            "Status": {
+                "type": "string",
+                "description": "The current status of the campaign (e.g., Active, Paused, Archived). This is useful for filtering out inactive campaigns from analysis.",
+                "dv360_definition": "The status setting for the entry.Active\nPaused\nArchived",
+                "sample_data": [
+                    "Active"
+                ]
+            },
+            "Campaign Goal": {
+                "type": "string",
+                "description": "The primary goal of the campaign: 'Raise awareness of my brand or product', 'Drive online action or visits', 'Drive offline or in-store sales', or 'Drive app installs or engagements'.",
+                "dv360_definition": "Select one of the applicable campaign goals:Raise awareness of my brand or product\nDrive online action or visits\nDrive offline or in-store sales\nDrive app installs or engagements",
+                "sample_data": [
+                    "Raise awareness of my brand or product",
+                    "Drive online action or visits",
+                    "Drive offline or in-store sales"
+                ]
+            },
+            "Campaign Goal KPI": {
+                "type": "string",
+                "description": "The KPI unit being measured for this campaign goal (e.g., CPM, Viewable %, CPIAVC, CPA, CPC, CTR, Other).",
+                "dv360_definition": "Select one of the applicable campaign goal KPI:CPM\nViewable %\nCPIAVC\nCPA\nCPC\nCTR\nOther",
+                "sample_data": [
+                    "Viewable %",
+                    "CTR",
+                    "CPA"
+                ]
+            },
+            "Campaign Goal KPI Value": {
+                "type": "float",
+                "description": "The target value for the campaign KPI. For example, CTR: 0.20%, CPA: 30\u20ac, CPM: 5\u20ac. For 'Viewable %' and 'CTR', enter as percentage (e.g., 80% = 80).",
+                "dv360_definition": "A positive number for campaign goal KPI. For campaign goal KPI 'Viewable %' and 'CTR' enter the value for this field in percentage, e.g. 80% would be entered as '80'. For KPI 'Other', this field is a short description of objective.",
+                "sample_data": [
+                    "95.0",
+                    "0.2",
+                    "10.0"
+                ]
+            },
+            "Creative Types": {
+                "type": "string, list",
+                "description": "The types of creatives expected to be used in the campaign: Display, Video, and/or Audio. Can include multiple types.",
+                "dv360_definition": "List of creative types you expect to use.Display\nVideo\nAudio",
+                "sample_data": [
+                    "display; video; audio;",
+                    "display;",
+                    "display; video;"
+                ]
+            },
+            "Campaign Budget": {
+                "type": "float",
+                "description": "The total monetary budget allocated to the campaign. Always a currency amount in the advertiser's currency.",
+                "dv360_definition": "A positive budget amount for the campaign. It is always a float for a currency amount since it will be always monetary budget. Currencies will be shown in the advertiser's currency in standard units (not in 1/1,000,000s of a currency unit)",
+                "sample_data": [
+                    "44000.0",
+                    "50000.0",
+                    "45647.14"
+                ]
+            },
+            "Campaign Start Date": {
+                "type": "string",
+                "description": "The start date and time of the campaign in MM/DD/YYYY HH:mm format.",
+                "dv360_definition": "The start date of the campaign in the format MM/DD/YYYY HH:mm",
+                "sample_data": [
+                    "04/18/2019 00:00",
+                    "08/30/2023 00:00",
+                    "01/01/2025 00:00"
+                ]
+            },
+            "Campaign End Date": {
+                "type": "string",
+                "description": "The end date and time of the campaign in MM/DD/YYYY HH:mm format. Often left open-ended (no end date set).",
+                "dv360_definition": "The end date of the campaign in the format MM/DD/YYYY HH:mm",
+                "sample_data": [
+                    "12/31/2018 23:59",
+                    "05/31/2021 23:59",
+                    "12/31/2019 23:59"
+                ]
+            },
+            "Frequency Enabled": {
+                "type": "string",
+                "description": "Indicates if frequency capping is enabled at the campaign level. When analyzing frequency caps, check this along with 'Frequency Exposures', 'Frequency Amount', and 'Frequency Period'.",
+                "dv360_definition": "Enables/disables impression-based frequency capping on the campaign.TRUE\nFALSE",
+                "sample_data": [
+                    "False",
+                    "True"
+                ]
+            },
+            "Frequency Exposures": {
+                "type": "integer",
+                "description": "The number of impressions allowed per user within the defined frequency cap period.",
+                "dv360_definition": "A positive integer amount for the number of impressions in a given Frequency Amount, that is, the x in 'Show x impressions over y period'.",
+                "sample_data": [
+                    "0",
+                    "6",
+                    "2"
+                ]
+            },
+            "Frequency Period": {
+                "type": "string",
+                "description": "The time unit for the frequency cap (Minutes, Hours, Days, Weeks, or Months).",
+                "dv360_definition": "Specifies the time period unit for the frequency cap.Minutes\nHours\nDays\nWeeks\nMonths",
+                "sample_data": [
+                    "Minutes",
+                    "Months",
+                    "Days"
+                ]
+            },
+            "Frequency Amount": {
+                "type": "integer",
+                "description": "The duration of the frequency cap period. Typically 6 exposures per month. Frequency cap periods must be 30 days or less.",
+                "dv360_definition": "A positive integer amount for length of time of the Frequency Period type, that is, the y in 'Show x impressions over y period'.\n\nFrequency cap time periods must be 30 days or less.",
+                "sample_data": [
+                    "0",
+                    "1",
+                    "2"
+                ]
+            },
+            "Campaign Budget Segments": {
+                "type": "string, list of lists",
+                "description": "Detailed breakdown of campaign budget allocation by segments. Can include Mediaocean integration details with Prisma codes for billing and invoice tracking.",
+                "dv360_definition": "The set of budget segments for the campaign. List format = (ID; Name; Type; Amount; Start Date; End Date; External Budget Source; External Budget ID; Invoice Grouping ID; Prisma Client Code; Prisma Product Code; Prisma Estimate Code; Prisma Type; Supplier;).Example '(; My Budget; IMPRESSIONS; 234; 01/01/2020 00:00; ; MEDIA_OCEAN; ExternalId; InvoiceId; Client; Product; Estimate; DISPLAY; MySupplier;)' Where ID and End Date are not provided.\nAcceptable values are provided in the following table:\nColumn NameRequiredDescriptionID No The unique ID of the campaign budget segment. This must be provided when editing a budget segment. If left blank, the budget segment will be written as new. Name Yes The display name of the campaign budget segment. Type Yes The type of the budget amount. Acceptable values are:Amount\nImpressions\n Amount Yes A positive budget amount for the budget type. This could be a simple integer impression value, or a float for a currency amount. Currencies will be shown in the advertiser's currency in standard units (not in 1/1,000,000s of a currency unit). Start Date No A timestamp for the flight start date of the budget segment in the format MM/DD/YYYY HH:mm. An unset start date is represented by a blank field value. End Date No A timestamp for the flight end date of the budget segment in the format MM/DD/YYYY HH:mm. An unset end date is represented by a blank field value. External Budget Source Yes The source of the budget segment. Acceptable values are:None\nMediaocean\n External Budget ID Only for Mediaocean budget segments If set, all impressions served against this budget segment will include this ID on the invoice if the customer has opted into budget-segment-level billing. Invoice Grouping ID No If set, all budget segments with the same External Budget ID and Invoice Grouping ID will be aggregated into a single invoice if the customer has opted into budget-segment-level billing. Prisma Client Code Only for Mediaocean budget segments Can only be set for Mediaocean budget segments. Google Payments Center supports searching and filtering on this field. Prisma Product Code Only for Mediaocean budget segments Can only be set for Mediaocean budget segments. Google Payments Center supports searching and filtering on this field. Prisma Estimate Code Only for Mediaocean budget segments Can only be set for Mediaocean budget segments. Google Payments Center supports searching and filtering on this field. Prisma Type Only for Mediaocean budget segments Can only be set for Mediaocean budget segments. The Prisma type of the segment. Acceptable values are:Display\nSearch\nVideo\nAudio\nSocial\nFee\n Prisma Supplier Only for Mediaocean budget segments Can only be set for Mediaocean budget segments. The entity allocated to this budget (DSP, site, etc.)",
+                "sample_data": []
+            },
+            "Demographic Targeting Gender": {
+                "type": "string, list",
+                "description": "Targets specific genders at campaign level: Male, Female, or Unknown. Used for demographic-based campaign optimization.",
+                "dv360_definition": "List of genders to target. Select one or more of the acceptable values:Female\nMale\nUnknown",
+                "sample_data": []
+            },
+            "Demographic Targeting Age": {
+                "type": "string, list",
+                "description": "Targets specific age ranges at campaign level (e.g., 18-25, 45+). Important for demographic segmentation.",
+                "dv360_definition": "Target to a user age range. Specify a from/to range by selecting a single From age and a single To age and whether to include unknown ages true/false. See the list of acceptable From/To ages.\nExample 1: to target 18-55 and include unknown ages, specify the format {From; To ; Include unknown True/False} = 18;55;true;\nExample 2: to target only users >35 years old and exclude unknown ages, specify the following = 35;+;false;.\nAcceptable values for From:18\n25\n35\n45\n55\n65\n\nAcceptable values for To:25\n35\n45\n55\n65\n+",
+                "sample_data": [
+                    "45; +; False;"
+                ]
+            },
+            "Demographic Targeting Household Income": {
+                "type": "string, list",
+                "description": "Targets households based on income percentile at campaign level (Top 10%, 11-20%, etc.).",
+                "dv360_definition": "Target a household income range. Specify a from/to range by selecting a single Top_of_Range income range and a single Bottom_of_Range income range and whether to include households with unknown income true/false. See the list of acceptable Top_of_Range/Bottom_of_Range ranges.\nExample 1: to target the top 10% to 50% of households and include households with unknown income, specify the format {Top_of_Range; Bottom_of_Range; Include unknown True/False} = Top 10%;41-50%;true;\nExample 2: to target only the lower 50% of households and exclude households with unknown income, specify the format {Top_of_Range; Bottom_of_Range; Include unknown True/False} = Lower 50%;Lower 50%;true;\nAcceptable values for Top_of_Range/Bottom_of_Range:Top 10%\n11-20%\n21-30%\n31-40%\n41-50%\nLower 50%",
+                "sample_data": []
+            },
+            "Demographic Targeting Parental Status": {
+                "type": "string, list",
+                "description": "Targets based on parental status at campaign level: Parent, Not a parent, or Unknown.",
+                "dv360_definition": "List of parental status to target. Select one or more of the acceptable values.Parent\nNot a parent\nUnknown",
+                "sample_data": [
+                    "Unknown;"
+                ]
+            },
+            "Geography Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of countries and regions to include in geographic targeting at campaign level. After transformation, location IDs are converted to human-readable names.",
+                "dv360_definition": "List of geographies to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_GEO_REGION.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Belgium",
+                    "Charleroi, Wallonia, Belgium",
+                    "United Kingdom"
+                ]
+            },
+            "Geography Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of countries and regions to exclude from geographic targeting at campaign level. After transformation, location IDs are converted to human-readable names.",
+                "dv360_definition": "List of geographies to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_GEO_REGION.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "Austria; France; India; Spain; Turkiye; United Kingdom",
+                    "Austria; France; India; Italy; Spain; Turkiye; United Kingdom",
+                    "Austria; Belgium; France; India; Spain; Turkiye; United Kingdom"
+                ]
+            },
+            "Language Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of languages to include in targeting at campaign level. After transformation, language codes are converted to names.",
+                "dv360_definition": "List of languages to include in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_LANGUAGE.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": [
+                    "German",
+                    "English",
+                    "French"
+                ]
+            },
+            "Language Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of languages to exclude from targeting at campaign level. After transformation, language codes are converted to names.",
+                "dv360_definition": "List of languages to exclude in targeting.\nThis column uses Display & Video 360 API TargetingOption resource IDs for targeting type TARGETING_TYPE_LANGUAGE.\nList format = (TargetingOption.targetingOptionId; TargetingOption.targetingOptionId; etc.). This list is generated in ascending numerical order.",
+                "sample_data": []
+            },
+            "Digital Content Labels - Exclude": {
+                "type": "string, list",
+                "description": "Digital content labels to exclude from targeting at campaign level for brand safety. Common practice is to exclude all except 'G' rated content.",
+                "dv360_definition": "List of the digital content labels to exclude. List format = (G;PG; etc.).G\nPG\nT\nMA\n?",
+                "sample_data": [
+                    "MA; Not yet labeled;",
+                    "PG; T; MA; Not yet labeled;",
+                    "PG;"
+                ]
+            },
+            "Brand Safety Sensitivity Setting": {
+                "type": "string",
+                "description": "The brand safety sensitivity level at campaign level: 'Do not block', 'Use Campaign Manager 360 Verification', or 'Use custom'.",
+                "dv360_definition": "Choose the sensitivity setting to block inventory based on the subject matter of its surrounding content.Do not block\nUse Campaign Manager 360 Verification\nUse custom",
+                "sample_data": [
+                    "Use custom",
+                    "Do not block"
+                ]
+            },
+            "Brand Safety Custom Settings": {
+                "type": "string, list",
+                "description": "A list of specific content categories to exclude for brand safety at campaign level when 'Use custom' sensitivity is selected. Commonly all sensitive categories are excluded.",
+                "dv360_definition": "If the Brand Safety Sensitivity Setting is 'Use custom', specify the list of standard content classifiers. For example, (Sexual;Alcohol;Tobacco;etc.).Sexual\nDerogatory\nDownloads & Sharing\nWeapons\nGambling\nViolence\nSuggestive\nProfanity\nAlcohol\nDrugs\nTobacco\nPolitics\nReligion\nTragedy\nTransportation Accidents\nSensitive social issues\nShocking",
+                "sample_data": [
+                    "Alcohol; Derogatory; Downloads & Sharing; Drugs; Gambling; Politics; Profanity; Religion; Sensitive social issues; Sexual; Suggestive; Tobacco; Tragedy; Transportation Accidents; Violence; Weapons;",
+                    "Alcohol; Derogatory; Downloads & Sharing; Drugs; Gambling; Politics; Profanity; Religion; Sensitive social issues; Sexual; Shocking; Suggestive; Tobacco; Tragedy; Transportation Accidents; Violence; Weapons;",
+                    "Sensitive social issues; Tragedy;"
+                ]
+            },
+            "Third Party Verification Services": {
+                "type": "string",
+                "description": "The third-party verification provider used at campaign level for brand safety and viewability measurement (e.g., Integral Ad Science, DoubleVerify, Adloox/Scope3).",
+                "dv360_definition": "Third party verification services provider.None\nIntegral Ad Science\nDoubleVerify\nAdloox\nNote: Adloox was a previous name for the provider now known as Scope3.",
+                "sample_data": [
+                    "DoubleVerify"
+                ]
+            },
+            "Third Party Verification Labels": {
+                "type": "string, list",
+                "description": "Specific labels or categories provided by the selected third-party verification service at campaign level.",
+                "dv360_definition": "If Third Party Verification Services is not \"None\", specify a list of labels supported by the selected provider.",
+                "sample_data": [
+                    "51004731;"
+                ]
+            },
+            "Viewability Targeting Active View": {
+                "type": "string",
+                "description": "The minimum predicted viewability percentage to target at campaign level (e.g., 0.7 = 70%). Higher values improve viewability but may reduce scale.",
+                "dv360_definition": "Target predicted viewability percentages. Percentages are represented as floats. One of {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9}",
+                "sample_data": [
+                    "0.9",
+                    "0.7",
+                    "0.5"
+                ]
+            },
+            "Position Targeting - Display On Screen": {
+                "type": "string, list",
+                "description": "Targets display ad positions on screen at campaign level: 'Above the fold', 'Below the fold', or 'Unknown'.",
+                "dv360_definition": "On screen display ad positions targeting. Select one or more of the acceptable values:Above the fold\nBelow the fold\nUnknown",
+                "sample_data": []
+            },
+            "Position Targeting - Video On Screen": {
+                "type": "string, list",
+                "description": "Targets video ad positions on screen at campaign level: 'Above the fold', 'Below the fold', or 'Unknown'.",
+                "dv360_definition": "On screen video ad positions targeting. Select one or more of the acceptable values:Above the fold\nBelow the fold\nUnknown",
+                "sample_data": []
+            },
+            "Position Targeting - Display Position In Content": {
+                "type": "string, list",
+                "description": "Targets specific positions for display ads at campaign level: 'In-Article', 'In-Feed', 'In-Banner', 'Interstitial', 'Native', etc.",
+                "dv360_definition": "Display ad content positions to target. Select one or more of the acceptable values:In-Article\nIn-Feed\nIn-Banner\nInterstitial\nUnknown",
+                "sample_data": [
+                    "Unknown; In-Banner; In-Article; In-Feed;",
+                    "Unknown; In-Banner; In-Article; In-Feed; Native Unknown; Native Recommendation; Native Peripheral; Native In-Feed; Native In-Article;"
+                ]
+            },
+            "Position Targeting - Video Position In Content": {
+                "type": "string, list",
+                "description": "Targets specific positions for video ads at campaign level: 'Pre-Roll', 'Mid-Roll', 'Post-Roll', 'In-Article', 'In-Feed', 'In-Banner', 'Out-Stream', etc.",
+                "dv360_definition": "Video ad content positions to target. Select one or more of the acceptable values:In-Article\nIn-Feed\nIn-Banner\nInterstitial\nUnknown Out-Stream\nPre-Roll\nMid-Roll\nPost-Roll\nUnknown In-Stream",
+                "sample_data": []
+            },
+            "Inventory Source Targeting - Authorized Seller Options": {
+                "type": "string",
+                "description": "Defines which types of sellers to target at campaign level: 'Authorized Direct Sellers' (only direct), 'Authorized Direct Sellers And Resellers' (direct + resellers), or 'Authorized and Non-Participating Publisher' (all including unknown).",
+                "dv360_definition": "Setting to target authorized direct sellers, authorized direct seller and resellers, or authorized seller + unknown. \"Authorized Direct\" means only authorized sellers will be targeted. \"Authorized Direct Sellers And Resellers\" means targeting the authorized sellers and resellers. \"Authorized and Non-Participating Publisher\" means it will target authorized sellers, resellers, and unknown sellers.Authorized Direct Sellers\nAuthorized Direct Sellers And Resellers\nAuthorized and Non-Participating Publisher",
+                "sample_data": [
+                    "Authorized and Non-Participating Publisher",
+                    "Authorized Direct Sellers And Resellers",
+                    "Authorized Direct Sellers"
+                ]
+            },
+            "Inventory Source Targeting - Include": {
+                "type": "string, list",
+                "description": "A list of inventory sources and exchanges to include at campaign level (e.g., Google Ad Manager, Magnite DV+, OpenX, Xandr). After transformation, exchange IDs are converted to names.",
+                "dv360_definition": "List of inventory sources, exchanges, and sub-exchanges to include in targeting.\nThis column uses Display & Video 360 API InventorySource resource IDs, published exchange IDs, and Display & Video 360 API TargetingOption resource IDs of targeting type TARGETING_TYPE_SUB_EXCHANGE.\nList format = (InventorySource.inventorySourceId; exchangeId; TargetingOption.targetingOptionId; etc.)",
+                "sample_data": [
+                    "Google Ad Manager; PubMatic; Magnite DV+; OpenX; Xandr - Monetize SSP (AppNexus); Yahoo Exchange; Improve Digital; PulsePoint; 16; 17; 19; 20; SpotX; Str\u00f6er SSP; ONE by AOL: Mobile; YieldOne; Yieldlab; PlatformId; ONE by AOL: Display Market Place; SmartClip; BidSwitch; Magnite CTV; FreeWheel SSP; 43; TeadsTv; Dailymotion; Equativ; Yieldmo; Waze; AdsWizz",
+                    "Google Ad Manager; Magnite DV+; OpenX; Xandr - Monetize SSP (AppNexus); SpotX; BidSwitch; Magnite CTV; FreeWheel SSP; TeadsTv; Equativ; Waze; Triton",
+                    "Google Ad Manager; Magnite DV+; OpenX; Xandr - Monetize SSP (AppNexus); Improve Digital; Equativ; Waze"
+                ]
+            },
+            "Inventory Source Targeting - Exclude": {
+                "type": "string, list",
+                "description": "A list of inventory sources and exchanges to exclude at campaign level. After transformation, exchange IDs are converted to names.",
+                "dv360_definition": "List of inventory sources, exchanges, and sub-exchanges to exclude in targeting.\nThis column uses Display & Video 360 API InventorySource resource IDs, published exchange IDs, and Display & Video 360 API TargetingOption resource IDs of targeting type TARGETING_TYPE_SUB_EXCHANGE.\nList format = (InventorySource.inventorySourceId; exchangeId; TargetingOption.targetingOptionId; etc.)",
+                "sample_data": [
+                    "Improve Digital; AdsWizz; Taboola",
+                    "Improve Digital; YieldOne; DT Fairbid; AdsWizz; GumGum; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn",
+                    "SpotX; YieldOne; BidSwitch; Magnite CTV; FreeWheel SSP; TeadsTv; DT Fairbid; AdsWizz; GumGum; Triton; Taboola; AppLovin MAX; Unity LevelPlay; Chartboost Mediation; AdMost; TopOn; 123"
+                ]
+            },
+            "Inventory Source Targeting - Target New Exchanges": {
+                "type": "string",
+                "description": "Indicates whether to automatically include newly added exchanges at campaign level as they become available.",
+                "dv360_definition": "Setting to target new exchanges.True\nFalse",
+                "sample_data": [
+                    "True",
+                    "False"
+                ]
+            },
+            "Environment Targeting": {
+                "type": "string, list",
+                "description": "Specifies where ads can appear at campaign level: 'Web' (desktop/mobile web), 'Web Not Optimized' (non-mobile-optimized sites), or 'App' (mobile apps).",
+                "dv360_definition": "List of environments to target. Select one or more of the acceptable values. Please note that 'Web Not Optimized' cannot be selected without selecting 'Web'.Web\nWeb Not Optimized\nApp",
+                "sample_data": [
+                    "Web;",
+                    "Web; App;",
+                    "App;"
+                ]
+            }
+        }
+    }
+}

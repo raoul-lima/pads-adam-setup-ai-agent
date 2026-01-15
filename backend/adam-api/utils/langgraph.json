@@ -1,0 +1,11 @@
+{
+    "dependencies": [
+      "langchain_openai",
+      "./graph_system/initializer"
+    ],
+    "graphs": {
+      "my_agent": "./ui/app.py:graph"
+    },
+    "env": "./.env"
+  }
+  

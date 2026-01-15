@@ -1,0 +1,48 @@
+[project]
+name = "evaluation-api"
+version = "0.1.0"
+description = "ADAM Evaluation API Service"
+requires-python = ">=3.12"
+dependencies = [
+    # FastAPI and server dependencies
+    "fastapi==0.115.9",
+    "uvicorn[standard]==0.32.1",
+    "pydantic==2.10.4",
+    "python-multipart==0.0.20",
+    
+    # HTTP client for calling ADAM API
+    "httpx==0.28.1",
+    
+    # Google Cloud dependencies
+    "google-api-python-client==2.175.0",
+    "google-auth==2.40.3",
+    "google-auth-httplib2==0.2.0",
+    "google-auth-oauthlib==1.2.2",
+    "google-api-core==2.25.1",
+    
+    # LangChain for LLM judge
+    "langchain==0.3.25",
+    "langchain-core==0.3.65",
+    "langchain-google-genai==2.0.10",
+    
+    # Data processing
+    "pandas==2.3.0",
+    "numpy>=2.1.0",
+    
+    # Utilities
+    "python-dotenv==1.1.0",
+    "requests==2.32.4",
+    
+    # PostgreSQL for shared state across instances
+    "psycopg2-binary==2.9.9",
+]
+
+[tool.uv]
+# Use dependency-groups instead of dev-dependencies (newer format)
+
+[dependency-groups]
+dev = [
+    "pytest==8.4.0",
+    "pytest-asyncio==1.0.0",
+]
+

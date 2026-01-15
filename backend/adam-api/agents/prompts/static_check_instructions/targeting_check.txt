@@ -1,0 +1,336 @@
+================================================================================
+ANALYSIS TYPE: DV360 Targeting Configuration Validation
+CATEGORY: targeting_check
+================================================================================
+
+**IMPORTANT**: This is a flexible framework. Adapt your analysis based on the user's specific requirements, naming conventions, and validation criteria. Always ask for clarification when conventions are ambiguous.
+
+----------------- ANALYSIS OVERVIEW -----------------
+
+**Purpose**: Validate DV360 targeting configuration compliance by:
+1. Checking naming convention adherence (format, structure, tokens)
+2. Cross-validating naming conventions against actual platform settings
+3. Identifying discrepancies between intended and configured targeting
+
+**Scope**: Primarily Line Items, with optional Campaign and Insertion Order context
+
+**Key Validation Dimensions**:
+- Geography targeting (geo codes, country/region settings)
+- Language targeting (language codes, platform language config)
+- Inventory source (marketplace type: public/private/deals)
+- Audience targeting (1st/2nd/3rd party, demographic, behavioral)
+- Device targeting (mobile, desktop, CTV, etc.)
+- Brand safety settings (content labels, sensitive categories)
+
+----------------- STANDARD NAMING CONVENTION STRUCTURE -----------------
+
+**Common Token Format** (example - user may have different conventions):
+```
+[GEOGRAPHY] [LANGUAGE] - [INVENTORY SOURCE] - [AUDIENCE] - [DEVICE] - [FREE TEXT]
+```
+
+**Token Examples**:
+1. **[GEOGRAPHY]**: Location codes
+   - ISO2: "FR", "DE", "BEFR" (Belgium+France), "UK"
+   - Full names: "France", "Germany", "Multi-Geo"
+   - Regions: "EMEA", "APAC", "LATAM"
+
+2. **[LANGUAGE]**: Language codes
+   - ISO codes: "EN", "FR", "DE", "ES"
+   - Full names: "English", "French", "Multi-Language"
+
+3. **[INVENTORY SOURCE]**: Marketplace type
+   - "Public", "Private", "PMP", "Deal", "Open Exchange"
+
+4. **[AUDIENCE]**: Targeting type
+   - "1P" (1st party), "2P" (2nd party), "3P" (3rd party)
+   - "Lookalike", "In-Market", "Affinity", "Custom"
+
+5. **[DEVICE]**: Device types
+   - "Mobile", "Desktop", "CTV", "Tablet", "Cross-Device"
+
+6. **Delimiters**: Commonly "-" or ":" or "_"
+   - Handle variable delimiter usage
+   - Strip extra whitespace after parsing
+
+**CRITICAL**: Always ask user for their specific naming convention before deep analysis!
+
+----------------- VALIDATION TYPES & LOGIC -----------------
+
+**Type 1: Naming Convention Format Validation**
+Check naming structure compliance without comparing to platform settings.
+
+**What to check**:
+- All required tokens present
+- Correct token order
+- Proper delimiter usage
+- Valid codes/values in each position
+- No typos or inconsistent formatting
+
+**Output**: Compliant vs Non-Compliant names with specific format errors
+
+---
+
+**Type 2: Name-to-Platform Cross-Validation**
+Compare naming convention tokens against actual DV360 configuration.
+
+**What to check**:
+- Geography in name matches Geography_Targeting_Include column
+- Language in name matches Language_Targeting_Include column
+- Inventory type in name matches actual inventory settings
+- Audience type in name matches audience configuration
+- Device in name matches Device_Targeting column
+
+**Common Field Mappings**:
+```
+Name Token                    → DV360 Column
+------------------------------------------------------
+[GEOGRAPHY] "FR"              → Geography_Targeting_Include contains "France"
+[LANGUAGE] "EN"               → Language_Targeting_Include contains "English"
+[INVENTORY] "Private"         → Private_Deal_Group_Targeting_Include is not empty
+[AUDIENCE] "1P"               → Audience lists from 1st party source
+[DEVICE] "Mobile"             → Device_Targeting includes mobile devices
+```
+
+**Output**: Matched vs Mismatched with specific error types
+
+---
+
+**Type 3: Campaign-Level Alignment Validation**
+Validate targeting consistency across campaign hierarchy.
+
+**What to check**:
+- Line item targeting aligns with parent Campaign settings
+- Geography consistency across Campaign → IO → Line Item
+- Language consistency across hierarchy
+- Inventory source logic (private naming must have private deals)
+- Audience category alignment
+
+**Output**: Aligned vs Misaligned entities with hierarchy context
+
+----------------- ANALYSIS WORKFLOW -----------------
+
+**Step 1: Understand User's Naming Convention**
+
+Ask questions like:
+- "What naming convention do you use for line items?"
+- "Which token represents geography? Language?"
+- "What delimiters separate tokens?"
+- "Do you have documented conventions I should follow?"
+
+Store this information in conversation context for consistency.
+
+---
+
+**Step 2: Clarify Validation Scope**
+
+Confirm:
+- Which entities to check (ALL line items? Specific campaigns?)
+- Which targeting dimensions to validate (geo only? All dimensions?)
+- Validation type (format only? Name-to-platform? Full hierarchy?)
+- Expected output format (detailed table? Summary counts?)
+
+---
+
+**Step 3: Design Validation Logic**
+
+Based on user requirements, create logic to:
+
+1. **Parse Names**: Extract tokens from Line_Item name column
+   - Handle variable delimiter types
+   - Trim whitespace
+   - Convert to standard format for comparison
+
+2. **Map Values**: Convert name tokens to expected platform values
+   - Geography codes → Country names
+   - Language codes → Language names
+   - Inventory keywords → Configuration patterns
+
+3. **Compare**: Check name values against actual targeting columns
+   - Exact matches
+   - Contains/partial matches (for multi-targeting)
+   - Case-insensitive comparison
+
+4. **Classify Issues**: Categorize discrepancies
+   - Missing targeting (in name but not in config)
+   - Extra targeting (in config but not in name)
+   - Completely wrong (different values entirely)
+
+---
+
+**Step 4: Structure Output**
+
+**For Compliant Results**:
+- Entity identifiers (IDs, names, parent campaign/IO)
+- Confirmation of what was checked
+- Key targeting parameters
+
+**For Non-Compliant Results**:
+- All fields from compliant output
+- **Error_Type column** with specific issue:
+  * "Geography Mismatch: Name has 'FR', Config has 'Germany'"
+  * "Language Missing: Name indicates 'EN', No language targeting set"
+  * "Inventory Type Mismatch: Name says 'Private', Config is Open Exchange"
+  * "Naming Format Error: Missing geography token"
+  * "Device Mismatch: Name has 'Mobile', Config includes Desktop"
+- Direct DV360 URL for quick navigation
+- Suggested fix (if determinable)
+
+----------------- AVAILABLE DATA FIELDS -----------------
+
+**Primary Fields for Targeting Validation**:
+
+From **Line_Items** table:
+- Line_Item (name)
+- Line_Item_Id
+- Geography_Targeting_Include
+- Geography_Targeting_Exclude
+- Language_Targeting_Include
+- Language_Targeting_Exclude
+- Device_Targeting
+- Inventory_Source_Targeting_Include
+- Private_Deal_Group_Targeting_Include
+- Audience_List_Targeting_Include
+- Audience_List_Targeting_Exclude
+- Brand_Safety_Custom_Settings
+- Digital_Content_Labels_Exclude
+- Environment_Targeting
+- Channel_Targeting_Include / Exclude
+- App_List_Targeting_Include / Exclude
+
+From **Campaigns** table (for context):
+- Campaign
+- Campaign_Id
+- (Same targeting fields as Line Items, if applicable)
+
+From **Insertion_orders** table (for context):
+- Insertion_Order
+- Insertion_Order_Id
+- Campaign_Id (for joins)
+
+**Important**: Use metadata to verify exact column names (case-sensitive)!
+
+----------------- COMMON ANALYSIS PATTERNS -----------------
+
+**Pattern 1: "Check targeting setup"**
+→ General health check of all targeting parameters
+→ Return: Summary counts + detailed list of issues
+
+**Pattern 2: "Validate naming convention"**
+→ Format validation only (no platform comparison)
+→ Return: Format-compliant vs non-compliant with format errors
+
+**Pattern 3: "Check geo targeting compliance"**
+→ Focus on geography dimension only
+→ Return: Geo-matched vs geo-mismatched
+
+**Pattern 4: "Find line items with targeting issues"**
+→ Multi-dimensional validation
+→ Return: Clean entities vs entities with ANY targeting issue
+
+**Pattern 5: "Compare line item names vs setup"**
+→ Full cross-validation across all dimensions
+→ Return: Comprehensive compliance report with specific mismatches
+
+----------------- OUTPUT SPECIFICATIONS -----------------
+
+**Standard Output Structure**:
+
+**Table 1: Compliant_Results**
+Columns:
+- Partner, Advertiser
+- Campaign_Id, Campaign
+- Insertion_Order_Id, Insertion_Order
+- Line_Item_Id, Line_Item
+- Status (Active/Paused/etc)
+- Key targeting fields (based on what was checked)
+- Compliance_Status = "Compliant"
+
+**Table 2: Non_Compliant_Results**
+All columns from Table 1, plus:
+- **Error_Type**: Specific issue description
+- **Expected_Value**: What should be (from name or convention)
+- **Actual_Value**: What is actually set in platform
+- **Severity**: High/Medium/Low (if applicable)
+- **DV360_Link**: Direct URL to entity
+- **Suggested_Fix**: Actionable recommendation
+
+**Summary Statistics**:
+- Total entities checked
+- Compliant count / percentage
+- Non-compliant count / percentage
+- Breakdown by error type
+- Most common issues
+
+----------------- EDGE CASES & SPECIAL HANDLING -----------------
+
+**Multi-Value Targeting**:
+- Line item targets multiple geos: "France, Germany, Belgium"
+- Name might have: "FRDEBENL" or "Multi-Geo"
+- Validation logic: Check if all name-indicated geos are in config
+
+**Exclusion Targeting**:
+- Geography_Targeting_Exclude might contradict name
+- Highlight as potential issue
+
+**Inherited Targeting**:
+- Some targeting set at Campaign level
+- Line item inherits unless overridden
+- Check hierarchy if user requests
+
+**Null/Empty Values**:
+- Missing targeting = "All" (default) or genuinely missing?
+- Clarify expected behavior with user
+
+**Case Sensitivity**:
+- Platform values might be "FRANCE" vs name has "FR"
+- Implement flexible matching logic
+
+**Delimiter Variations**:
+- User might have inconsistent delimiters
+- Flag as warning even if targeting is correct
+
+----------------- TECHNICAL CONSIDERATIONS -----------------
+
+**Performance Optimization**:
+- For large datasets (1000+ line items), consider sampling for initial validation
+- Provide progress indicators if processing takes time
+
+**Data Quality**:
+- Handle null/missing columns gracefully
+- Report if expected columns don't exist in metadata
+
+**Flexibility**:
+- Don't hardcode naming patterns
+- Learn from user's examples
+- Ask for confirmation on ambiguous patterns
+
+**Actionability**:
+- Always include DV360 links for non-compliant items
+- Provide clear, specific error messages
+- Suggest fixes when possible
+
+----------------- USER INTERACTION GUIDELINES -----------------
+
+**When to Ask Questions**:
+✓ Naming convention structure is unclear
+✓ User says "check targeting" without specifying dimensions
+✓ Multiple valid interpretations exist
+✓ First time seeing this partner's data
+
+**Questions to Ask**:
+1. "What naming convention do you follow? Could you share an example line item name?"
+2. "Should I check ALL line items, or filter to specific campaigns?"
+3. "Which targeting dimensions should I validate? (geo, language, inventory, audience, device)"
+4. "Do you want format validation only, or comparison against platform settings?"
+5. "What output format works best? Detailed table or summary report?"
+
+**When to Proceed Without Asking**:
+✓ Conversation history has naming convention info
+✓ User explicitly stated scope and requirements
+✓ Standard patterns are obvious from data
+✓ Instructions are unambiguous
+
+================================================================================
+END OF TARGETING CHECK INSTRUCTIONS
+================================================================================

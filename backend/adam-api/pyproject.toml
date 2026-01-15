@@ -1,0 +1,81 @@
+# Optimized pyproject.toml - Removed 9 unused dependencies
+# Saves ~2.6GB disk space and 3-5 minutes installation time
+
+[project]
+name = "adam-backend"
+version = "0.1.0"
+description = "Adam Setup Backend API - Optimized"
+requires-python = ">=3.12"
+dependencies = [
+    # FastAPI and server dependencies
+    "fastapi==0.115.9",
+    "uvicorn[standard]==0.32.1",
+    "pydantic==2.10.4",
+    "python-multipart==0.0.20",
+    
+    # LangChain and AI dependencies
+    "langchain==0.3.25",
+    "langchain-core==0.3.65",
+    "langchain-community==0.3.25",
+    "langchain-openai==0.3.22",
+    "langchain-google-genai==2.0.10",
+    "langchain-anthropic==0.3.13",
+    "langgraph==0.4.8",
+    "langgraph-cli[inmem]==0.3.1",
+    "langgraph-checkpoint-sqlite==2.0.10",
+    
+    # Google Cloud dependencies
+    "google-cloud-storage==3.1.0",
+    "google-cloud-bigquery==3.34.0",  # Verify if actually needed
+    "google-generativeai==0.8.5",
+    
+    # Database dependencies
+    "psycopg2-binary==2.9.10",
+    # REMOVED: pymysql (not used - using PostgreSQL)
+    # REMOVED: sqlalchemy (not used - using raw psycopg2)
+    
+    # Data processing
+    "pandas==2.3.0",
+    "numpy>=2.1.0",
+    # REMOVED: tabulate (not imported)
+    
+    # Vector database and retrieval (Pinecone)
+    "pinecone==7.3.0",
+    "pinecone-text>=0.10.0",
+    "langchain-cohere==0.4.4",
+    "cohere<5.16",
+    # REMOVED: faiss-cpu (not used)
+    # REMOVED: chromadb (not used)
+    # REMOVED: sentence-transformers (not used)
+    
+    # REMOVED: BigQuery SQL driver
+    # pybigquery (not used)
+    
+    # Utilities
+    "python-dotenv==1.1.0",
+    "requests==2.32.4",
+    "openai==1.86.0",
+    # REMOVED: aiofiles (not used)
+    # REMOVED: fuzzywuzzy (only in prompt text, not imported)
+]
+
+[tool.uv]
+dev-dependencies = [
+    # Testing
+    "pytest==8.4.0",
+    "pytest-asyncio==1.0.0",
+    "httpx==0.28.1",
+    
+    # Google Sheets API (for data/update_metadata.py utility script only)
+    "google-api-python-client==2.175.0",
+    "google-auth==2.40.3",
+    "google-auth-httplib2==0.2.0",
+    "google-auth-oauthlib==1.2.2",
+    "google-api-core==2.25.1",
+]
+
+# NOTE: To run the metadata update script, install dev dependencies:
+# uv pip install -e ".[dev]"
+# or
+# pip install -r requirements-dev.txt
+

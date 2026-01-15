@@ -1,0 +1,426 @@
+================================================================================
+ANALYSIS TYPE: DV360 Campaign Quality & Compliance Audit
+CATEGORY: quality_check
+================================================================================
+
+**IMPORTANT**: This framework defines standard quality checks. Adapt based on partner-specific requirements, industry standards, and user priorities. Always confirm thresholds and rules when not explicitly stated.
+
+----------------- ANALYSIS OVERVIEW -----------------
+
+**Purpose**: Audit DV360 campaign quality and compliance against best practices:
+1. Identify configuration gaps (missing safeguards, tracking, etc.)
+2. Validate quality settings (viewability, brand safety, frequency)
+3. Ensure delivery health (creative status, inventory quality)
+4. Flag operational risks (missing tracking, unsafe content)
+
+**Scope**: Campaigns, Insertion Orders, and Line Items
+
+**Key Quality Dimensions**:
+- Frequency capping (preventing ad fatigue)
+- Viewability targeting (ensuring ad visibility)
+- Brand safety (protecting brand reputation)
+- Conversion tracking (measuring performance)
+- Inventory quality (blacklists, whitelists)
+- Creative health (approval status)
+- Environment compliance (app vs web vs CTV)
+
+----------------- DATA SOURCES & FIELD REQUIREMENTS -----------------
+
+**From Campaigns**:
+- Campaign_Id, Campaign (identifiers)
+- Frequency_Enabled (boolean)
+- Frequency_Exposures (number of times shown)
+- Frequency_Amount (time period multiplier)
+- Frequency_Period (hour/day/week/month)
+- Status
+
+**From Insertion_Orders**:
+- Insertion_Order_Id, Insertion_Order (identifiers)
+- Campaign_Id (for joins)
+- Frequency_Enabled
+- Frequency_Exposures
+- Frequency_Amount
+- Frequency_Period
+- Status
+
+**From Line_Items**:
+- Line_Item_Id, Line_Item (identifiers)
+- Insertion_Order_Id, Campaign_Id (for joins)
+- Frequency_Enabled, Frequency_Exposures, Frequency_Amount, Frequency_Period
+- Viewability_Targeting_Active_View (percentage or "All")
+- Inventory_Source_Targeting_Include (public exchanges, private marketplaces)
+- Private_Deal_Group_Targeting_Include (deal IDs)
+- Digital_Content_Labels_Exclude (DL-MA, DL-G, DL-PG, etc.)
+- Brand_Safety_Custom_Settings (sensitive category exclusions)
+- Conversion_Floodlight_Activity_Ids (tracking pixels)
+- Channel_Targeting_Exclude (blocked channels/apps)
+- Keyword_List_Targeting_Exclude (blocked keywords)
+- Environment_Targeting (web, app, CTV)
+- Status
+- Creative_Status (active, rejected, pending)
+
+**From Partner_Settings** (if available, otherwise ask user):
+- Partner_Default_Environment (standard environment setting)
+- Partner_Min_Viewability_Threshold (e.g., 70%)
+- Partner_Standard_Frequency_Cap (e.g., 3 exposures per 7 days)
+
+**Required Derivations**:
+
+**Inventory_Type** (calculate for each Line Item):
+- "Public": Inventory_Source_Targeting_Include has public exchange values
+- "Private": Private_Deal_Group_Targeting_Include is not empty
+- "Mixed": Both public and private targeting present
+
+----------------- COMPLIANCE CHECKS & VALIDATION RULES -----------------
+
+**CATEGORY A: FREQUENCY CAPPING**
+
+**Purpose**: Prevent ad fatigue, ensure optimal frequency exposure
+
+**A1. Campaign Frequency Cap Check**
+- **Rule**: Campaign must have frequency cap enabled with reasonable limit
+- **Non-Compliant Conditions**:
+  * Frequency_Enabled = False OR NULL
+  * Frequency_Exposures = 0, NULL, or "Unlimited"
+- **Error_Type**: "Campaign Frequency Not Set"
+- **Severity**: HIGH (risks ad fatigue, budget waste)
+
+**A2. Insertion Order Frequency Cap Check**
+- **Rule**: IO should have frequency cap for better control
+- **Non-Compliant Conditions**:
+  * Frequency_Exposures = 0, NULL, or "Unlimited"
+  * (Even if campaign has cap, IO-level cap is best practice)
+- **Error_Type**: "IO Frequency Not Set"
+- **Severity**: MEDIUM
+
+**A3. Line Item Frequency Cap Check**
+- **Rule**: Line items should have specific frequency caps
+- **Non-Compliant Conditions**:
+  * Frequency_Exposures = 0, NULL, or "Unlimited"
+- **Error_Type**: "LI Frequency Not Set"
+- **Severity**: MEDIUM
+
+**Frequency Best Practices to Check**:
+- Standard cap: 3-5 exposures per 7 days (ask user for their standard)
+- Higher caps (>10/day) might indicate misconfiguration
+- No cap on high-budget campaigns is high risk
+
+---
+
+**CATEGORY B: VIEWABILITY TARGETING**
+
+**Purpose**: Ensure ads are actually seen by users
+
+**B1. Viewability Missing on Public Inventory**
+- **Rule**: Public inventory must have viewability requirements
+- **Non-Compliant Conditions**:
+  * Inventory_Type = "Public" OR "Mixed"
+  * AND Viewability_Targeting_Active_View = "All" OR 0% OR NULL
+- **Error_Type**: "Viewability Missing on Public Inventory"
+- **Severity**: HIGH
+- **Context**: Public inventory quality varies; viewability ensures value
+
+**B2. Viewability Set on Private Deals (Warning)**
+- **Rule**: Private deals often have pre-negotiated quality; viewability targeting might restrict delivery unnecessarily
+- **Potentially Sub-Optimal Condition**:
+  * Inventory_Type = "Private"
+  * AND Viewability_Targeting_Active_View > 0% (not "All")
+- **Error_Type**: "Viewability Set on Private Deal"
+- **Severity**: LOW (warning, not error - might be intentional)
+- **Context**: Check if intentional or oversight
+
+**Viewability Thresholds to Check**:
+- Standard: 70% viewability (ask user for partner standard)
+- Conservative: 80-90% (might limit scale)
+- Below 50%: likely too low to be meaningful
+
+---
+
+**CATEGORY C: BRAND SAFETY**
+
+**Purpose**: Protect brand reputation by avoiding unsafe content
+
+**C1. Missing Digital Content Label Exclusions**
+- **Rule**: All line items should exclude inappropriate content ratings
+- **Non-Compliant Conditions**:
+  * Digital_Content_Labels_Exclude is NULL OR empty string OR "[]"
+- **Error_Type**: "Missing Digital Content Label Exclusions"
+- **Severity**: HIGH
+- **Standard Exclusions**: DL-MA (mature audiences), DL-G (general), DL-PG (parental guidance) - depending on brand requirements
+
+**C2. Missing Sensitive Category Exclusions**
+- **Rule**: Line items should exclude sensitive content categories
+- **Non-Compliant Conditions**:
+  * Brand_Safety_Custom_Settings is NULL OR empty OR "[]"
+- **Error_Type**: "Missing Sensitive Category Exclusions"
+- **Severity**: HIGH
+- **Context**: Categories like adult content, violence, hate speech, illegal downloads
+
+**Brand Safety Best Practices**:
+- Always exclude: Controversial content, adult content, illegal activities
+- Consider excluding: Political content, tragedy/conflict (brand-dependent)
+- Whitelist approach: For strict brands, use channel/app whitelists
+
+---
+
+**CATEGORY D: CONVERSION TRACKING**
+
+**Purpose**: Measure campaign effectiveness and ROI
+
+**D1. Missing Floodlight Tracking**
+- **Rule**: Line items should have conversion tracking pixels
+- **Non-Compliant Conditions**:
+  * Conversion_Floodlight_Activity_Ids is NULL OR empty OR "[]"
+- **Error_Type**: "Missing Floodlight Activity"
+- **Severity**: MEDIUM (HIGH if campaign objective is conversions)
+- **Context**: Essential for performance measurement and optimization
+
+**Tracking Best Practices**:
+- Upper funnel: Awareness campaigns might not need conversion tracking
+- Mid-funnel: Consideration campaigns should have engagement tracking
+- Lower funnel: Conversion campaigns MUST have tracking
+
+---
+
+**CATEGORY E: INVENTORY QUALITY (BLACKLISTS)**
+
+**Purpose**: Avoid low-quality or brand-inappropriate placements
+
+**E1. Missing Channel Blacklist**
+- **Rule**: Line items should exclude low-quality channels/apps
+- **Non-Compliant Conditions**:
+  * Channel_Targeting_Exclude is NULL OR empty OR "[]"
+- **Error_Type**: "Missing Channel Blacklist"
+- **Severity**: MEDIUM
+- **Context**: Proactive protection against known poor performers
+
+**E2. Missing Keyword Blacklist**
+- **Rule**: Line items should exclude brand-unsafe keywords
+- **Non-Compliant Conditions**:
+  * Keyword_List_Targeting_Exclude is NULL OR empty OR "[]"
+- **Error_Type**: "Missing Keyword Blacklist"
+- **Severity**: MEDIUM
+- **Context**: Prevents ads appearing in unsafe content contexts
+
+**Blacklist Best Practices**:
+- Industry-standard lists: Use DV360's standard blacklists
+- Custom lists: Add partner-specific blocked channels/apps
+- Regular updates: Blacklists should be reviewed monthly
+
+---
+
+**CATEGORY F: ENVIRONMENT TARGETING**
+
+**Purpose**: Ensure ads run in intended environments (web/app/CTV)
+
+**F1. Environment Mismatch**
+- **Rule**: Line item environment should match partner default or campaign intent
+- **Non-Compliant Conditions**:
+  * Environment_Targeting != Partner_Default_Environment
+  * (Unless explicitly different by design)
+- **Error_Type**: "Environment Mismatch"
+- **Severity**: MEDIUM
+- **Context**: Web vs app vs CTV have different performance characteristics
+
+**Environment Best Practices**:
+- Separate line items per environment for better optimization
+- CTV requires specific creative formats
+- App campaigns often need app-specific tracking
+
+---
+
+**CATEGORY G: CREATIVE STATUS**
+
+**Purpose**: Ensure active line items have approved creatives
+
+**G1. Creative Rejected**
+- **Rule**: Line items should not have rejected creatives
+- **Non-Compliant Conditions**:
+  * Status = "Active" OR "ENTITY_STATUS_ACTIVE"
+  * AND Creative_Status = "Rejected" OR "CREATIVE_STATUS_REJECTED"
+- **Error_Type**: "Creative Rejected"
+- **Severity**: CRITICAL (line item can't serve)
+- **Context**: Blocks delivery entirely
+
+**G2. Missing Creative (if determinable)**
+- **Rule**: Active line items must have at least one creative
+- **Non-Compliant Conditions**:
+  * Status = "Active"
+  * AND (Creative count = 0 OR Creative_Status is NULL)
+- **Error_Type**: "No Creative Assigned"
+- **Severity**: CRITICAL
+
+----------------- ANALYSIS WORKFLOW -----------------
+
+**Step 1: Understand Partner Standards**
+
+Ask user for partner-specific rules:
+- "What's your standard frequency cap? (e.g., 3 exposures per 7 days)"
+- "What viewability threshold do you require? (e.g., 70%)"
+- "Are there specific content labels you always exclude?"
+- "Do you have custom blacklists I should check for?"
+
+Store these in conversation for consistency.
+
+---
+
+**Step 2: Clarify Analysis Scope**
+
+Confirm:
+- Which entities to audit (ALL? Active only? Specific campaigns?)
+- Which quality dimensions to check (ALL? Specific categories?)
+- How to handle warnings vs errors (fail on warnings?)
+- Expected output format (detailed report? Summary only?)
+
+---
+
+**Step 3: Execute Compliance Checks**
+
+For each entity:
+1. Determine Inventory_Type (public/private/mixed)
+2. Run applicable checks based on inventory type and entity type
+3. Collect all violations per entity
+4. Classify by severity (Critical/High/Medium/Low)
+
+---
+
+**Step 4: Structure Results**
+
+**Group 1: Compliant Entities**
+- Passed all applicable checks
+- No issues found
+- Include key quality metrics for verification
+
+**Group 2: Non-Compliant Entities**
+- Failed at least one check
+- Include ALL error types per entity
+- Sort by severity, then by entity type
+
+----------------- OUTPUT SPECIFICATIONS -----------------
+
+**Table 1: Compliant_Results**
+
+Columns:
+- Entity_Type (Campaign/IO/Line Item)
+- Partner, Advertiser
+- Campaign_Id, Campaign
+- Insertion_Order_Id, Insertion_Order (if applicable)
+- Line_Item_Id, Line_Item (if applicable)
+- Status
+- Checks_Passed (comma-separated list of what was validated)
+- Compliance_Status = "Compliant"
+
+**Table 2: Non_Compliant_Results**
+
+All columns from Table 1, plus:
+- **Error_Type**: Specific issue (e.g., "Missing Floodlight Activity")
+- **Error_Category**: Group (Frequency/Viewability/Brand Safety/etc.)
+- **Severity**: CRITICAL/HIGH/MEDIUM/LOW
+- **Current_Value**: What's currently set (or empty)
+- **Expected_Value**: What should be set
+- **Impact**: Business impact description
+- **DV360_Link**: Direct URL to fix
+- **Recommended_Action**: Specific fix instructions
+
+**Multiple Errors Per Entity**:
+- If entity fails multiple checks, include one row per error
+- OR use comma-separated Error_Type values (user preference)
+
+**Summary Statistics**:
+```
+Total Entities Audited: 234
+  - Campaigns: 12
+  - Insertion Orders: 34
+  - Line Items: 188
+
+Compliance Summary:
+  - Fully Compliant: 156 (66.7%)
+  - Non-Compliant: 78 (33.3%)
+
+Issues by Severity:
+  - Critical: 5 (Creative Rejected, No Tracking)
+  - High: 23 (Missing Brand Safety, Viewability)
+  - Medium: 38 (Frequency Caps, Blacklists)
+  - Low: 12 (Environment Warnings)
+
+Top 5 Issues:
+  1. Missing Floodlight Activity: 34 line items
+  2. Viewability Missing on Public: 28 line items
+  3. LI Frequency Not Set: 25 line items
+  4. Missing Channel Blacklist: 18 line items
+  5. Missing Digital Content Labels: 15 line items
+```
+
+----------------- EDGE CASES & SPECIAL HANDLING -----------------
+
+**Inherited Settings**:
+- Line item might inherit frequency from Campaign/IO
+- Check hierarchy if line item appears non-compliant
+
+**Intentional Exceptions**:
+- Some campaigns legitimately don't need tracking (branding)
+- Private deals might not need viewability
+- Ask user about tolerance for warnings vs errors
+
+**New vs Legacy Campaigns**:
+- Older campaigns might predate current standards
+- Consider flagging legacy issues separately
+
+**Test Campaigns**:
+- Filter out test campaigns if user provides naming pattern
+- Or include with lower severity
+
+**Inactive Entities**:
+- Should inactive entities be checked?
+- Default: Check active only, but make it configurable
+
+----------------- COMMON QUALITY ANALYSIS PATTERNS -----------------
+
+**Pattern 1: "Full quality audit"**
+→ Run ALL checks across all entities
+→ Return: Comprehensive compliance report
+
+**Pattern 2: "Check brand safety"**
+→ Focus on categories C only (digital labels, sensitive categories)
+→ Return: Brand safety compliance report
+
+**Pattern 3: "Find line items with no tracking"**
+→ Focus on category D only (floodlight check)
+→ Return: Line items missing conversion tracking
+
+**Pattern 4: "Audit frequency caps"**
+→ Focus on category A only (frequency checks)
+→ Return: Frequency compliance across all levels
+
+**Pattern 5: "Check viewability settings"**
+→ Focus on category B only
+→ Return: Viewability compliance by inventory type
+
+----------------- USER INTERACTION GUIDELINES -----------------
+
+**When to Ask Questions**:
+✓ Partner standards not clear (frequency caps, viewability thresholds)
+✓ User says "quality check" without specifying dimensions
+✓ Ambiguous about which entities to check
+✓ First time auditing this partner's data
+
+**Good Questions**:
+1. "Should I run a full quality audit, or focus on specific areas? (e.g., brand safety only)"
+2. "What's your standard frequency cap rule? (default: 3 exposures per 7 days)"
+3. "Should I check all line items, or only active ones?"
+4. "How should I handle warnings vs critical errors? Include both?"
+5. "Do you want a detailed table or summary report?"
+
+**When to Proceed Without Asking**:
+✓ User said "full quality check" or "comprehensive audit"
+✓ Standards are industry-standard (can assume defaults)
+✓ Conversation history has partner rules
+✓ Scope is explicitly stated
+
+**Suggesting Improvements**:
+- After identifying issues, offer to create a remediation plan
+- "I found 23 line items missing viewability. Would you like me to generate a fix list?"
+
+================================================================================
+END OF QUALITY CHECK INSTRUCTIONS
+================================================================================
